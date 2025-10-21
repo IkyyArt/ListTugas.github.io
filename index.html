@@ -314,6 +314,7 @@
         background: rgba(52, 152, 219, 0.05);
       }
 
+      /* PERBAIKAN: Tambahkan scroll untuk container subjects */
       .subjects-container {
         max-height: 0;
         overflow: hidden;
@@ -321,9 +322,11 @@
       }
 
       .subjects-container.show {
-        max-height: 1000px;
+        max-height: 500px; /* Tinggi maksimum untuk container subjects */
+        overflow-y: auto; /* Tambahkan scroll vertikal */
       }
 
+      /* PERBAIKAN: Tambahkan scroll untuk container tasks */
       .tasks-container {
         max-height: 0;
         overflow: hidden;
@@ -331,8 +334,8 @@
       }
 
       .tasks-container.show {
-        max-height: 300px;
-        overflow-y: auto;
+        max-height: 400px; /* Tinggi maksimum untuk container tasks */
+        overflow-y: auto; /* Tambahkan scroll vertikal */
       }
 
       .confetti {
@@ -542,6 +545,11 @@
       }
 
       .deadline-far {
+        color: var(--success);
+        font-weight: 600;
+      }
+
+      .deadline-completed {
         color: var(--success);
         font-weight: 600;
       }
@@ -2074,165 +2082,231 @@
                                                                               (
                                                                                 task
                                                                               ) => {
-                                                                                const daysUntilDeadline =
-                                                                                  Math.ceil(
-                                                                                    (new Date(
-                                                                                      task.deadline
-                                                                                    ) -
-                                                                                      new Date()) /
-                                                                                      (1000 *
-                                                                                        60 *
-                                                                                        60 *
-                                                                                        24)
-                                                                                  );
-                                                                                let deadlineClass =
-                                                                                  "deadline-far";
-                                                                                let deadlineText = `${daysUntilDeadline} hari lagi`;
-
+                                                                                // PERBAIKAN: Tugas yang sudah selesai harus menampilkan "Selesai"
                                                                                 if (
-                                                                                  daysUntilDeadline <
-                                                                                  0
-                                                                                ) {
-                                                                                  deadlineClass =
-                                                                                    "deadline-urgent";
-                                                                                  deadlineText =
-                                                                                    "Terlambat!";
-                                                                                } else if (
-                                                                                  daysUntilDeadline <=
-                                                                                  1
-                                                                                ) {
-                                                                                  deadlineClass =
-                                                                                    "deadline-urgent";
-                                                                                  deadlineText =
-                                                                                    "Besok!";
-                                                                                } else if (
-                                                                                  daysUntilDeadline <=
-                                                                                  3
-                                                                                ) {
-                                                                                  deadlineClass =
-                                                                                    "deadline-near";
-                                                                                  deadlineText = `${daysUntilDeadline} hari lagi`;
-                                                                                }
-
-                                                                                let priorityClass =
-                                                                                  "";
-                                                                                let priorityText =
-                                                                                  "";
-                                                                                let priorityBadge =
-                                                                                  "";
-
-                                                                                if (
-                                                                                  task.priority ===
-                                                                                  "high"
-                                                                                ) {
-                                                                                  priorityClass =
-                                                                                    "priority-high";
-                                                                                  priorityText =
-                                                                                    "Tinggi";
-                                                                                  priorityBadge =
-                                                                                    '<span class="badge bg-danger priority-badge">Tinggi</span>';
-                                                                                } else if (
-                                                                                  task.priority ===
-                                                                                  "medium"
-                                                                                ) {
-                                                                                  priorityClass =
-                                                                                    "priority-medium";
-                                                                                  priorityText =
-                                                                                    "Sedang";
-                                                                                  priorityBadge =
-                                                                                    '<span class="badge bg-warning priority-badge">Sedang</span>';
-                                                                                } else {
-                                                                                  priorityClass =
-                                                                                    "priority-low";
-                                                                                  priorityText =
-                                                                                    "Rendah";
-                                                                                  priorityBadge =
-                                                                                    '<span class="badge bg-success priority-badge">Rendah</span>';
-                                                                                }
-
-                                                                                return `
-                                                                                <div class="task-row hierarchy-indent-2 ${priorityClass}" id="task-${
-                                                                                  task.id
-                                                                                }">
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        <div class="flex-grow-1">
-                                                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                                                <h6 class="mb-1">${
-                                                                                                  task.name
-                                                                                                } ${
                                                                                   task.completed
-                                                                                    ? '<span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span>'
-                                                                                    : priorityBadge
-                                                                                }</h6>
-                                                                                                <div>
-                                                                                                    <button class="btn btn-sm edit-btn me-2" onclick="editTask(${
-                                                                                                      semester.id
-                                                                                                    }, ${
-                                                                                  subject.id
-                                                                                }, ${
-                                                                                  task.id
-                                                                                })">
-                                                                                                        <i class="fas fa-edit"></i>
-                                                                                                    </button>
-                                                                                                    <button class="btn btn-sm ${
-                                                                                                      task.completed
-                                                                                                        ? "btn-warning"
-                                                                                                        : "btn-success"
-                                                                                                    } me-2" onclick="markTaskCompleted(${
-                                                                                  semester.id
-                                                                                }, ${
-                                                                                  subject.id
-                                                                                }, ${
-                                                                                  task.id
-                                                                                })">
-                                                                                                        <i class="fas ${
-                                                                                                          task.completed
-                                                                                                            ? "fa-undo"
-                                                                                                            : "fa-check"
-                                                                                                        }"></i>
-                                                                                                    </button>
-                                                                                                    <button class="btn btn-sm delete-btn" onclick="deleteTask(${
-                                                                                                      semester.id
-                                                                                                    }, ${
-                                                                                  subject.id
-                                                                                }, ${
-                                                                                  task.id
-                                                                                })">
-                                                                                                        <i class="fas fa-times"></i>
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                                                                                <small class="text-muted">${
-                                                                                                  task.type
-                                                                                                } • Deadline: ${new Date(
-                                                                                  task.deadline
-                                                                                ).toLocaleDateString(
-                                                                                  "id-ID"
-                                                                                )}</small>
-                                                                                                <small class="${deadlineClass}">${deadlineText}</small>
-                                                                                            </div>
-                                                                                            ${
-                                                                                              task.estimatedTime >
-                                                                                              0
-                                                                                                ? `<div class="mb-1"><small class="text-muted">Perkiraan waktu: ${Math.ceil(
-                                                                                                    task.estimatedTime /
+                                                                                ) {
+                                                                                  return `
+                                                                                  <div class="task-row hierarchy-indent-2 priority-low" id="task-${
+                                                                                    task.id
+                                                                                  }">
+                                                                                      <div class="d-flex align-items-center">
+                                                                                          <div class="flex-grow-1">
+                                                                                              <div class="d-flex justify-content-between align-items-center">
+                                                                                                  <h6 class="mb-1">${
+                                                                                                    task.name
+                                                                                                  } <span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span></h6>
+                                                                                                  <div>
+                                                                                                      <button class="btn btn-sm edit-btn me-2" onclick="editTask(${
+                                                                                                        semester.id
+                                                                                                      }, ${
+                                                                                    subject.id
+                                                                                  }, ${
+                                                                                    task.id
+                                                                                  })">
+                                                                                                          <i class="fas fa-edit"></i>
+                                                                                                      </button>
+                                                                                                      <button class="btn btn-sm btn-warning me-2" onclick="markTaskCompleted(${
+                                                                                                        semester.id
+                                                                                                      }, ${
+                                                                                    subject.id
+                                                                                  }, ${
+                                                                                    task.id
+                                                                                  })">
+                                                                                                          <i class="fas fa-undo"></i>
+                                                                                                      </button>
+                                                                                                      <button class="btn btn-sm delete-btn" onclick="deleteTask(${
+                                                                                                        semester.id
+                                                                                                      }, ${
+                                                                                    subject.id
+                                                                                  }, ${
+                                                                                    task.id
+                                                                                  })">
+                                                                                                          <i class="fas fa-times"></i>
+                                                                                                      </button>
+                                                                                                  </div>
+                                                                                              </div>
+                                                                                              <div class="d-flex justify-content-between align-items-center mb-1">
+                                                                                                  <small class="text-muted">${
+                                                                                                    task.type
+                                                                                                  } • Deadline: ${new Date(
+                                                                                    task.deadline
+                                                                                  ).toLocaleDateString(
+                                                                                    "id-ID"
+                                                                                  )}</small>
+                                                                                                  <small class="deadline-completed">Selesai</small>
+                                                                                              </div>
+                                                                                              ${
+                                                                                                task.estimatedTime >
+                                                                                                0
+                                                                                                  ? `<div class="mb-1"><small class="text-muted">Perkiraan waktu: ${Math.ceil(
+                                                                                                      task.estimatedTime /
+                                                                                                        60
+                                                                                                    )} jam ${
+                                                                                                      task.estimatedTime %
                                                                                                       60
-                                                                                                  )} jam ${
-                                                                                                    task.estimatedTime %
-                                                                                                    60
-                                                                                                  } menit</small></div>`
-                                                                                                : ""
-                                                                                            }
-                                                                                            ${
-                                                                                              task.description
-                                                                                                ? `<div class="mt-1"><small class="text-muted">${task.description}</small></div>`
-                                                                                                : ""
-                                                                                            }
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            `;
+                                                                                                    } menit</small></div>`
+                                                                                                  : ""
+                                                                                              }
+                                                                                              ${
+                                                                                                task.description
+                                                                                                  ? `<div class="mt-1"><small class="text-muted">${task.description}</small></div>`
+                                                                                                  : ""
+                                                                                              }
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </div>
+                                                                                `;
+                                                                                } else {
+                                                                                  // Tugas yang belum selesai menampilkan status deadline
+                                                                                  const daysUntilDeadline =
+                                                                                    Math.ceil(
+                                                                                      (new Date(
+                                                                                        task.deadline
+                                                                                      ) -
+                                                                                        new Date()) /
+                                                                                        (1000 *
+                                                                                          60 *
+                                                                                          60 *
+                                                                                          24)
+                                                                                    );
+                                                                                  let deadlineClass =
+                                                                                    "deadline-far";
+                                                                                  let deadlineText = `${daysUntilDeadline} hari lagi`;
+
+                                                                                  if (
+                                                                                    daysUntilDeadline <
+                                                                                    0
+                                                                                  ) {
+                                                                                    deadlineClass =
+                                                                                      "deadline-urgent";
+                                                                                    deadlineText =
+                                                                                      "Terlambat!";
+                                                                                  } else if (
+                                                                                    daysUntilDeadline <=
+                                                                                    1
+                                                                                  ) {
+                                                                                    deadlineClass =
+                                                                                      "deadline-urgent";
+                                                                                    deadlineText =
+                                                                                      "Besok!";
+                                                                                  } else if (
+                                                                                    daysUntilDeadline <=
+                                                                                    3
+                                                                                  ) {
+                                                                                    deadlineClass =
+                                                                                      "deadline-near";
+                                                                                    deadlineText = `${daysUntilDeadline} hari lagi`;
+                                                                                  }
+
+                                                                                  let priorityClass =
+                                                                                    "";
+                                                                                  let priorityText =
+                                                                                    "";
+                                                                                  let priorityBadge =
+                                                                                    "";
+
+                                                                                  if (
+                                                                                    task.priority ===
+                                                                                    "high"
+                                                                                  ) {
+                                                                                    priorityClass =
+                                                                                      "priority-high";
+                                                                                    priorityText =
+                                                                                      "Tinggi";
+                                                                                    priorityBadge =
+                                                                                      '<span class="badge bg-danger priority-badge">Tinggi</span>';
+                                                                                  } else if (
+                                                                                    task.priority ===
+                                                                                    "medium"
+                                                                                  ) {
+                                                                                    priorityClass =
+                                                                                      "priority-medium";
+                                                                                    priorityText =
+                                                                                      "Sedang";
+                                                                                    priorityBadge =
+                                                                                      '<span class="badge bg-warning priority-badge">Sedang</span>';
+                                                                                  } else {
+                                                                                    priorityClass =
+                                                                                      "priority-low";
+                                                                                    priorityText =
+                                                                                      "Rendah";
+                                                                                    priorityBadge =
+                                                                                      '<span class="badge bg-success priority-badge">Rendah</span>';
+                                                                                  }
+
+                                                                                  return `
+                                                                                  <div class="task-row hierarchy-indent-2 ${priorityClass}" id="task-${
+                                                                                    task.id
+                                                                                  }">
+                                                                                      <div class="d-flex align-items-center">
+                                                                                          <div class="flex-grow-1">
+                                                                                              <div class="d-flex justify-content-between align-items-center">
+                                                                                                  <h6 class="mb-1">${
+                                                                                                    task.name
+                                                                                                  } ${priorityBadge}</h6>
+                                                                                                  <div>
+                                                                                                      <button class="btn btn-sm edit-btn me-2" onclick="editTask(${
+                                                                                                        semester.id
+                                                                                                      }, ${
+                                                                                    subject.id
+                                                                                  }, ${
+                                                                                    task.id
+                                                                                  })">
+                                                                                                          <i class="fas fa-edit"></i>
+                                                                                                      </button>
+                                                                                                      <button class="btn btn-sm btn-success me-2" onclick="markTaskCompleted(${
+                                                                                                        semester.id
+                                                                                                      }, ${
+                                                                                    subject.id
+                                                                                  }, ${
+                                                                                    task.id
+                                                                                  })">
+                                                                                                          <i class="fas fa-check"></i>
+                                                                                                      </button>
+                                                                                                      <button class="btn btn-sm delete-btn" onclick="deleteTask(${
+                                                                                                        semester.id
+                                                                                                      }, ${
+                                                                                    subject.id
+                                                                                  }, ${
+                                                                                    task.id
+                                                                                  })">
+                                                                                                          <i class="fas fa-times"></i>
+                                                                                                      </button>
+                                                                                                  </div>
+                                                                                              </div>
+                                                                                              <div class="d-flex justify-content-between align-items-center mb-1">
+                                                                                                  <small class="text-muted">${
+                                                                                                    task.type
+                                                                                                  } • Deadline: ${new Date(
+                                                                                    task.deadline
+                                                                                  ).toLocaleDateString(
+                                                                                    "id-ID"
+                                                                                  )}</small>
+                                                                                                  <small class="${deadlineClass}">${deadlineText}</small>
+                                                                                              </div>
+                                                                                              ${
+                                                                                                task.estimatedTime >
+                                                                                                0
+                                                                                                  ? `<div class="mb-1"><small class="text-muted">Perkiraan waktu: ${Math.ceil(
+                                                                                                      task.estimatedTime /
+                                                                                                        60
+                                                                                                    )} jam ${
+                                                                                                      task.estimatedTime %
+                                                                                                      60
+                                                                                                    } menit</small></div>`
+                                                                                                  : ""
+                                                                                              }
+                                                                                              ${
+                                                                                                task.description
+                                                                                                  ? `<div class="mt-1"><small class="text-muted">${task.description}</small></div>`
+                                                                                                  : ""
+                                                                                              }
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </div>
+                                                                                `;
+                                                                                }
                                                                               }
                                                                             )
                                                                             .join(
