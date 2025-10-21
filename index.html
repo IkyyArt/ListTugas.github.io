@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyPlanner - Kelola Tugas & PR</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #2980b9;
+        --accent: #e74c3c;
+        --light: #f8f9fa;
+        --dark: #2c3e50;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --danger: #e74c3c;
+        --info: #1abc9c;
+        --semester-1: #3498db;
+        --semester-2: #2ecc71;
+        --semester-3: #e74c3c;
+        --semester-4: #f39c12;
+        --semester-5: #9b59b6;
+        --semester-6: #1abc9c;
+        --semester-7: #34495e;
+        --semester-8: #e67e22;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        padding: 5rem 0;
+        border-radius: 0 0 30px 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,197.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+        background-size: cover;
+        background-position: center;
+      }
+
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .semester-card {
+        animation: fadeIn 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .progress {
+        height: 10px;
+        border-radius: 10px;
+        margin: 10px 0;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background: var(--secondary);
+        transform: scale(1.05);
+      }
+
+      .btn-success {
+        background: var(--success);
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-success:hover {
+        transform: scale(1.05);
+      }
+
+      .btn-warning {
+        background: var(--warning);
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: white;
+      }
+
+      .btn-warning:hover {
+        transform: scale(1.05);
+      }
+
+      .btn-danger {
+        background: var(--danger);
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-danger:hover {
+        transform: scale(1.05);
+      }
+
+      .floating-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+      }
+
+      .floating-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.7);
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
+        }
+        50% {
+          box-shadow: 0 5px 30px rgba(231, 76, 60, 0.8);
+        }
+        100% {
+          box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
+        }
+      }
+
+      .modal-content {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+      }
+
+      .stats-card {
+        text-align: center;
+        padding: 1.5rem;
+        border-radius: 15px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .stats-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #6c757d;
+      }
+
+      .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        color: #dee2e6;
+      }
+
+      .delete-btn {
+        color: #e74c3c;
+        background: none;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .delete-btn:hover {
+        color: #c0392b;
+        transform: scale(1.2);
+      }
+
+      .edit-btn {
+        color: var(--primary);
+        background: none;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .edit-btn:hover {
+        color: var(--secondary);
+        transform: scale(1.2);
+      }
+
+      .subject-item {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-left: 4px solid var(--primary);
+        transition: all 0.3s ease;
+      }
+
+      .subject-item:hover {
+        background: #e9ecef;
+        transform: translateX(5px);
+      }
+
+      .task-row {
+        background: white;
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-left: 3px solid var(--secondary);
+        transition: all 0.3s ease;
+      }
+
+      .task-row:hover {
+        background: #f8f9fa;
+        transform: translateX(3px);
+      }
+
+      .semester-header {
+        cursor: pointer;
+        padding: 20px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .semester-header:hover {
+        background: rgba(52, 152, 219, 0.05);
+      }
+
+      .subjects-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+      }
+
+      .subjects-container.show {
+        max-height: 1000px;
+      }
+
+      .tasks-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+      }
+
+      .tasks-container.show {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background-color: var(--accent);
+        opacity: 0;
+        z-index: 9999;
+        animation: confetti-fall 5s ease-in-out forwards;
+      }
+
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(-100px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(1000px) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .achievement-badge {
+        display: inline-block;
+        background: var(--warning);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 10px;
+        animation: bounce 1s infinite alternate;
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-5px);
+        }
+      }
+
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 3rem 0;
+        margin-top: 5rem;
+      }
+
+      .tab-content {
+        padding: 20px 0;
+      }
+
+      .nav-tabs .nav-link {
+        border: none;
+        color: var(--dark);
+        font-weight: 600;
+        padding: 12px 25px;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .nav-tabs .nav-link.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      .task-progress {
+        height: 8px;
+        border-radius: 4px;
+        background: #e9ecef;
+        margin: 5px 0;
+        overflow: hidden;
+      }
+
+      .task-progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 4px;
+        transition: width 0.5s ease;
+      }
+
+      .editable-title {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+
+      .editable-title:hover {
+        background: rgba(52, 152, 219, 0.1);
+      }
+
+      .editable-input {
+        border: 2px solid var(--primary);
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-weight: bold;
+        width: 100%;
+      }
+
+      .hierarchy-indent {
+        margin-left: 20px;
+      }
+
+      .hierarchy-indent-2 {
+        margin-left: 40px;
+      }
+
+      .deadline-card {
+        background: linear-gradient(135deg, var(--info), #16a085);
+        color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(26, 188, 156, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .deadline-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(26, 188, 156, 0.4);
+      }
+
+      .deadline-amount {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .priority-high {
+        border-left: 4px solid var(--danger) !important;
+      }
+
+      .priority-medium {
+        border-left: 4px solid var(--warning) !important;
+      }
+
+      .priority-low {
+        border-left: 4px solid var(--success) !important;
+      }
+
+      .calendar-summary {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .task-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-right: 10px;
+      }
+
+      .task-link:hover {
+        text-decoration: underline;
+      }
+
+      .edit-task-form {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+
+      .priority-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 10px;
+        margin-left: 8px;
+      }
+
+      .deadline-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 10px;
+        background: var(--warning);
+        color: white;
+        margin-left: 8px;
+      }
+
+      .upcoming-deadlines {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .deadline-item {
+        padding: 10px 15px;
+        border-bottom: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+      }
+
+      .deadline-item:hover {
+        background: #f8f9fa;
+      }
+
+      .deadline-urgent {
+        color: var(--danger);
+        font-weight: 600;
+      }
+
+      .deadline-near {
+        color: var(--warning);
+        font-weight: 600;
+      }
+
+      .deadline-far {
+        color: var(--success);
+        font-weight: 600;
+      }
+
+      .semester-badge {
+        background: var(--primary);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .semester-1 {
+        background: var(--semester-1);
+      }
+      .semester-2 {
+        background: var(--semester-2);
+      }
+      .semester-3 {
+        background: var(--semester-3);
+      }
+      .semester-4 {
+        background: var(--semester-4);
+      }
+      .semester-5 {
+        background: var(--semester-5);
+      }
+      .semester-6 {
+        background: var(--semester-6);
+      }
+      .semester-7 {
+        background: var(--semester-7);
+      }
+      .semester-8 {
+        background: var(--semester-8);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#" style="color: var(--primary)">
+          <i class="fas fa-graduation-cap me-2"></i>StudyPlanner
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Beranda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#semesters">Semester</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#calendar">Kalender</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container text-center position-relative">
+        <h1 class="display-4 fw-bold mb-4">StudyPlanner - Manajemen Studi</h1>
+        <p class="lead mb-4">
+          Kelola semua mata kuliah dan tugas perkuliahanmu dengan sistem
+          semester
+        </p>
+        <button
+          class="btn btn-light btn-lg"
+          data-bs-toggle="modal"
+          data-bs-target="#addSemesterModal"
+        >
+          <i class="fas fa-plus me-2"></i>Tambah Semester
+        </button>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="container my-5">
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="stats-card">
+            <div class="stats-number" id="totalSemesters">0</div>
+            <div class="stats-label">Total Semester</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card">
+            <div class="stats-number" id="totalSubjects">0</div>
+            <div class="stats-label">Mata Kuliah</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card">
+            <div class="stats-number" id="totalTasks">0</div>
+            <div class="stats-label">Total Tugas</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card">
+            <div class="stats-number" id="completedTasks">0</div>
+            <div class="stats-label">Tugas Selesai</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="container my-5" id="calendar">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="deadline-card">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <h3 class="mb-3">Tugas Mendatang</h3>
+                <div class="deadline-amount" id="upcomingTasks">0</div>
+                <p class="mb-0">Tugas dengan deadline terdekat</p>
+              </div>
+              <div class="col-md-6 text-end">
+                <button
+                  class="btn btn-light btn-lg me-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addTaskModal"
+                >
+                  <i class="fas fa-plus me-2"></i>Tambah Tugas
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="calendar-summary">
+            <h4 class="mb-3">Ringkasan Tugas</h4>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Total Tugas:</span>
+              <strong id="summaryTotal">0</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Tugas Selesai:</span>
+              <strong id="summaryCompleted">0</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Tugas Tertunda:</span>
+              <strong id="summaryPending">0</strong>
+            </div>
+            <div class="progress mb-2">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                id="summaryProgress"
+                style="width: 0%"
+              ></div>
+            </div>
+            <small class="text-muted" id="summaryPercentage">0% selesai</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container my-5">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="semesters-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#semesters"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-calendar-alt me-2"></i>Semester
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="deadlines-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#deadlines"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-clock me-2"></i>Deadline Mendatang
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <!-- Semesters Tab -->
+        <div class="tab-pane fade show active" id="semesters" role="tabpanel">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Daftar Semester</h2>
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                <i class="fas fa-filter me-2"></i>Filter
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item filter-option"
+                    data-filter="all"
+                    href="#"
+                    >Semua</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item filter-option"
+                    data-filter="completed"
+                    href="#"
+                    >Selesai</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item filter-option"
+                    data-filter="in-progress"
+                    href="#"
+                    >Dalam Proses</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item filter-option"
+                    data-filter="pending"
+                    href="#"
+                    >Belum Dimulai</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="semestersContainer" class="row">
+            <!-- Semester items will be dynamically added here -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state">
+            <i class="fas fa-calendar-plus"></i>
+            <h3>Belum Ada Semester</h3>
+            <p>
+              Mulai tambahkan semester dan mata kuliah untuk mengatur jadwal
+              studimu!
+            </p>
+            <button
+              class="btn btn-primary mt-3"
+              data-bs-toggle="modal"
+              data-bs-target="#addSemesterModal"
+            >
+              <i class="fas fa-plus me-2"></i>Tambah Semester Pertama
+            </button>
+          </div>
+        </div>
+
+        <!-- Deadlines Tab -->
+        <div class="tab-pane fade" id="deadlines" role="tabpanel">
+          <h2 class="fw-bold mb-4">Deadline Tugas Mendatang</h2>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="upcoming-deadlines" id="upcomingDeadlines">
+                <!-- Deadline items will be dynamically added here -->
+              </div>
+
+              <div id="emptyDeadlineState" class="empty-state py-4">
+                <i class="fas fa-calendar-check"></i>
+                <h5>Belum Ada Deadline</h5>
+                <p>
+                  Tambahkan tugas dengan deadline untuk melihat jadwal di sini!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container text-center">
+        <p>
+          &copy; 2023 StudyPlanner App. Kelola studi dan tugas perkuliahanmu
+          dengan mudah!
+        </p>
+      </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div
+      class="floating-btn"
+      data-bs-toggle="modal"
+      data-bs-target="#addSemesterModal"
+    >
+      <i class="fas fa-plus"></i>
+    </div>
+
+    <!-- Add Semester Modal -->
+    <div class="modal fade" id="addSemesterModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tambah Semester</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addSemesterForm">
+              <div class="mb-3">
+                <label for="semesterNumber" class="form-label"
+                  >Nomor Semester</label
+                >
+                <select class="form-select" id="semesterNumber" required>
+                  <option value="1">Semester 1</option>
+                  <option value="2">Semester 2</option>
+                  <option value="3">Semester 3</option>
+                  <option value="4">Semester 4</option>
+                  <option value="5">Semester 5</option>
+                  <option value="6">Semester 6</option>
+                  <option value="7">Semester 7</option>
+                  <option value="8">Semester 8</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="semesterYear" class="form-label"
+                  >Tahun Akademik</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="semesterYear"
+                  placeholder="Contoh: 2023/2024"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="semesterDescription" class="form-label"
+                  >Deskripsi (Opsional)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="semesterDescription"
+                  rows="3"
+                  placeholder="Deskripsi tentang semester ini..."
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary" id="saveSemesterBtn">
+              Simpan Semester
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Subject Modal -->
+    <div class="modal fade" id="addSubjectModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tambah Mata Kuliah</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addSubjectForm">
+              <input type="hidden" id="subjectSemesterId" />
+              <div class="mb-3">
+                <label for="subjectName" class="form-label"
+                  >Nama Mata Kuliah</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="subjectName"
+                  placeholder="Contoh: Kalkulus, Pemrograman Web, Basis Data"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="subjectCode" class="form-label"
+                  >Kode Mata Kuliah (Opsional)</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="subjectCode"
+                  placeholder="Contoh: TIF101, MKU002"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="subjectLecturer" class="form-label"
+                  >Nama Dosen (Opsional)</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="subjectLecturer"
+                  placeholder="Nama dosen pengampu"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="subjectCredits" class="form-label"
+                  >Jumlah SKS</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="subjectCredits"
+                  min="1"
+                  max="6"
+                  value="3"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="subjectDescription" class="form-label"
+                  >Deskripsi (Opsional)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="subjectDescription"
+                  rows="3"
+                  placeholder="Deskripsi tentang mata kuliah ini..."
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary" id="saveSubjectBtn">
+              Simpan Mata Kuliah
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tambah Tugas</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addTaskForm">
+              <input type="hidden" id="taskSemesterId" />
+              <input type="hidden" id="taskSubjectId" />
+              <div class="mb-3">
+                <label for="taskName" class="form-label">Nama Tugas</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="taskName"
+                  placeholder="Contoh: Tugas 1, UTS, UAS, Projek Akhir"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="taskType" class="form-label">Jenis Tugas</label>
+                <select class="form-select" id="taskType" required>
+                  <option value="tugas">Tugas</option>
+                  <option value="quiz">Quiz</option>
+                  <option value="uts">UTS</option>
+                  <option value="uas">UAS</option>
+                  <option value="projek">Projek</option>
+                  <option value="presentasi">Presentasi</option>
+                  <option value="laporan">Laporan</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="taskDeadline" class="form-label">Deadline</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="taskDeadline"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="taskPriority" class="form-label">Prioritas</label>
+                <select class="form-select" id="taskPriority" required>
+                  <option value="low">Rendah</option>
+                  <option value="medium" selected>Sedang</option>
+                  <option value="high">Tinggi</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="taskEstimatedTime" class="form-label"
+                  >Perkiraan Waktu Pengerjaan (menit)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="taskEstimatedTime"
+                  min="1"
+                  placeholder="Contoh: 120 untuk 2 jam"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="taskDescription" class="form-label"
+                  >Deskripsi (Opsional)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="taskDescription"
+                  rows="3"
+                  placeholder="Deskripsi detail tentang tugas ini..."
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary" id="saveTaskBtn">
+              Simpan Tugas
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center p-5">
+            <i
+              class="fas fa-check-circle text-success mb-3"
+              style="font-size: 4rem"
+            ></i>
+            <h3 class="mb-3">Berhasil!</h3>
+            <p id="successMessage">Semester berhasil ditambahkan!</p>
+            <button
+              type="button"
+              class="btn btn-primary mt-3"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Data storage
+      let semesters = JSON.parse(localStorage.getItem("semesters")) || [];
+      let upcomingTasks = 0;
+
+      // DOM Elements
+      const semestersContainer = document.getElementById("semestersContainer");
+      const emptyState = document.getElementById("emptyState");
+      const emptyDeadlineState = document.getElementById("emptyDeadlineState");
+      const upcomingDeadlines = document.getElementById("upcomingDeadlines");
+      const addSemesterForm = document.getElementById("addSemesterForm");
+      const saveSemesterBtn = document.getElementById("saveSemesterBtn");
+      const addSubjectForm = document.getElementById("addSubjectForm");
+      const saveSubjectBtn = document.getElementById("saveSubjectBtn");
+      const addTaskForm = document.getElementById("addTaskForm");
+      const saveTaskBtn = document.getElementById("saveTaskBtn");
+      const totalSemestersEl = document.getElementById("totalSemesters");
+      const totalSubjectsEl = document.getElementById("totalSubjects");
+      const totalTasksEl = document.getElementById("totalTasks");
+      const completedTasksEl = document.getElementById("completedTasks");
+      const upcomingTasksEl = document.getElementById("upcomingTasks");
+      const summaryTotalEl = document.getElementById("summaryTotal");
+      const summaryCompletedEl = document.getElementById("summaryCompleted");
+      const summaryPendingEl = document.getElementById("summaryPending");
+      const summaryProgressEl = document.getElementById("summaryProgress");
+      const summaryPercentageEl = document.getElementById("summaryPercentage");
+
+      // Initialize the app
+      document.addEventListener("DOMContentLoaded", function () {
+        renderSemesters();
+        updateStats();
+        updateCalendarDisplay();
+        renderUpcomingDeadlines();
+        setupEventListeners();
+      });
+
+      // Setup event listeners
+      function setupEventListeners() {
+        // Save semester button
+        saveSemesterBtn.addEventListener("click", addSemester);
+
+        // Save subject button
+        saveSubjectBtn.addEventListener("click", addSubject);
+
+        // Save task button
+        saveTaskBtn.addEventListener("click", addTask);
+
+        // Filter options
+        document.querySelectorAll(".filter-option").forEach((option) => {
+          option.addEventListener("click", function (e) {
+            e.preventDefault();
+            const filter = this.getAttribute("data-filter");
+            filterSemesters(filter);
+          });
+        });
+      }
+
+      // Add a new semester
+      function addSemester() {
+        const number = parseInt(
+          document.getElementById("semesterNumber").value
+        );
+        const year = document.getElementById("semesterYear").value;
+        const description = document.getElementById(
+          "semesterDescription"
+        ).value;
+
+        if (!number || !year) {
+          alert("Nomor semester dan tahun akademik harus diisi!");
+          return;
+        }
+
+        // Check if semester already exists
+        if (semesters.find((s) => s.number === number && s.year === year)) {
+          alert("Semester dengan nomor dan tahun yang sama sudah ada!");
+          return;
+        }
+
+        const newSemester = {
+          id: Date.now(),
+          number,
+          year,
+          description,
+          subjects: [],
+          createdAt: new Date().toISOString(),
+        };
+
+        semesters.push(newSemester);
+        // Sort semesters by number
+        semesters.sort((a, b) => a.number - b.number);
+        saveToLocalStorage();
+        renderSemesters();
+        updateStats();
+
+        // Show success message
+        document.getElementById("successMessage").textContent =
+          "Semester berhasil ditambahkan!";
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+        successModal.show();
+
+        // Reset form
+        addSemesterForm.reset();
+        const addSemesterModal = bootstrap.Modal.getInstance(
+          document.getElementById("addSemesterModal")
+        );
+        addSemesterModal.hide();
+
+        // Add confetti animation
+        createConfetti();
+      }
+
+      // Add a subject to a semester
+      function addSubject() {
+        const semesterId = parseInt(
+          document.getElementById("subjectSemesterId").value
+        );
+        const name = document.getElementById("subjectName").value;
+        const code = document.getElementById("subjectCode").value;
+        const lecturer = document.getElementById("subjectLecturer").value;
+        const credits =
+          parseInt(document.getElementById("subjectCredits").value) || 0;
+        const description = document.getElementById("subjectDescription").value;
+
+        if (!semesterId || !name) {
+          alert("Nama mata kuliah harus diisi!");
+          return;
+        }
+
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const newSubject = {
+          id: Date.now(),
+          name,
+          code,
+          lecturer,
+          credits,
+          description,
+          tasks: [],
+        };
+
+        semester.subjects.push(newSubject);
+        saveToLocalStorage();
+        renderSemesters();
+        updateStats();
+
+        // Show success message
+        document.getElementById("successMessage").textContent =
+          "Mata kuliah berhasil ditambahkan!";
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+        successModal.show();
+
+        // Reset form
+        addSubjectForm.reset();
+        const addSubjectModal = bootstrap.Modal.getInstance(
+          document.getElementById("addSubjectModal")
+        );
+        addSubjectModal.hide();
+      }
+
+      // Add a task to a subject
+      function addTask() {
+        const semesterId = parseInt(
+          document.getElementById("taskSemesterId").value
+        );
+        const subjectId = parseInt(
+          document.getElementById("taskSubjectId").value
+        );
+        const name = document.getElementById("taskName").value;
+        const type = document.getElementById("taskType").value;
+        const deadline = document.getElementById("taskDeadline").value;
+        const priority = document.getElementById("taskPriority").value;
+        const estimatedTime =
+          parseInt(document.getElementById("taskEstimatedTime").value) || 0;
+        const description = document.getElementById("taskDescription").value;
+
+        if (!semesterId || !subjectId || !name || !deadline) {
+          alert("Nama tugas dan deadline harus diisi!");
+          return;
+        }
+
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const newTask = {
+          id: Date.now(),
+          name,
+          type,
+          deadline,
+          priority,
+          estimatedTime,
+          description,
+          completed: false,
+          createdAt: new Date().toISOString(),
+        };
+
+        subject.tasks.push(newTask);
+        saveToLocalStorage();
+        renderSemesters();
+        updateStats();
+        updateCalendarDisplay();
+        renderUpcomingDeadlines();
+
+        // Show success message
+        document.getElementById("successMessage").textContent =
+          "Tugas berhasil ditambahkan!";
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+        successModal.show();
+
+        // Reset form
+        addTaskForm.reset();
+        const addTaskModal = bootstrap.Modal.getInstance(
+          document.getElementById("addTaskModal")
+        );
+        addTaskModal.hide();
+      }
+
+      // Delete a semester
+      function deleteSemester(id) {
+        if (
+          confirm(
+            "Apakah Anda yakin ingin menghapus semester ini? Semua mata kuliah dan tugas akan ikut terhapus!"
+          )
+        ) {
+          semesters = semesters.filter((s) => s.id !== id);
+          saveToLocalStorage();
+          renderSemesters();
+          updateStats();
+        }
+      }
+
+      // Delete a subject
+      function deleteSubject(semesterId, subjectId) {
+        if (
+          confirm(
+            "Apakah Anda yakin ingin menghapus mata kuliah ini? Semua tugas akan ikut terhapus!"
+          )
+        ) {
+          const semester = semesters.find((s) => s.id === semesterId);
+          if (semester) {
+            semester.subjects = semester.subjects.filter(
+              (sub) => sub.id !== subjectId
+            );
+            saveToLocalStorage();
+            renderSemesters();
+            updateStats();
+          }
+        }
+      }
+
+      // Delete a task
+      function deleteTask(semesterId, subjectId, taskId) {
+        if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
+          const semester = semesters.find((s) => s.id === semesterId);
+          if (semester) {
+            const subject = semester.subjects.find(
+              (sub) => sub.id === subjectId
+            );
+            if (subject) {
+              subject.tasks = subject.tasks.filter((t) => t.id !== taskId);
+              saveToLocalStorage();
+              renderSemesters();
+              updateStats();
+              updateCalendarDisplay();
+              renderUpcomingDeadlines();
+            }
+          }
+        }
+      }
+
+      // Toggle subjects visibility
+      function toggleSubjects(semesterId) {
+        const subjectsContainer = document.getElementById(
+          `subjects-${semesterId}`
+        );
+        const toggleIcon = document.getElementById(`toggle-icon-${semesterId}`);
+
+        if (subjectsContainer.classList.contains("show")) {
+          subjectsContainer.classList.remove("show");
+          toggleIcon.className = "fas fa-chevron-down";
+        } else {
+          subjectsContainer.classList.add("show");
+          toggleIcon.className = "fas fa-chevron-up";
+        }
+      }
+
+      // Toggle tasks visibility
+      function toggleTasks(subjectId) {
+        const tasksContainer = document.getElementById(`tasks-${subjectId}`);
+        const toggleIcon = document.getElementById(
+          `task-toggle-icon-${subjectId}`
+        );
+
+        if (tasksContainer.classList.contains("show")) {
+          tasksContainer.classList.remove("show");
+          toggleIcon.className = "fas fa-chevron-down";
+        } else {
+          tasksContainer.classList.add("show");
+          toggleIcon.className = "fas fa-chevron-up";
+        }
+      }
+
+      // Mark task as completed
+      function markTaskCompleted(semesterId, subjectId, taskId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const task = subject.tasks.find((t) => t.id === taskId);
+        if (!task) return;
+
+        task.completed = !task.completed;
+        saveToLocalStorage();
+        renderSemesters();
+        updateStats();
+        updateCalendarDisplay();
+        renderUpcomingDeadlines();
+
+        // Show success message
+        if (task.completed) {
+          document.getElementById(
+            "successMessage"
+          ).textContent = `Selamat! Tugas "${task.name}" berhasil diselesaikan!`;
+          const successModal = new bootstrap.Modal(
+            document.getElementById("successModal")
+          );
+          successModal.show();
+
+          // Add confetti animation
+          createConfetti();
+        }
+      }
+
+      // Edit semester year
+      function editSemesterYear(semesterId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const titleElement = document.getElementById(
+          `semester-year-${semesterId}`
+        );
+        const currentYear = semester.year;
+
+        titleElement.innerHTML = `
+                <input type="text" class="editable-input" value="${currentYear}" id="edit-semester-${semesterId}">
+                <button class="btn btn-sm btn-success ms-2" onclick="saveSemesterYear(${semesterId})">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button class="btn btn-sm btn-secondary ms-1" onclick="cancelEditSemesterYear(${semesterId}, '${currentYear}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+        document.getElementById(`edit-semester-${semesterId}`).focus();
+      }
+
+      // Save semester year
+      function saveSemesterYear(semesterId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const newYear = document.getElementById(
+          `edit-semester-${semesterId}`
+        ).value;
+        if (!newYear.trim()) {
+          alert("Tahun akademik tidak boleh kosong!");
+          return;
+        }
+
+        semester.year = newYear;
+        saveToLocalStorage();
+        renderSemesters();
+      }
+
+      // Cancel edit semester year
+      function cancelEditSemesterYear(semesterId, originalYear) {
+        const titleElement = document.getElementById(
+          `semester-year-${semesterId}`
+        );
+        titleElement.innerHTML = `
+                ${originalYear}
+                <button class="btn btn-sm edit-btn ms-2" onclick="editSemesterYear(${semesterId})">
+                    <i class="fas fa-edit"></i>
+                </button>
+            `;
+      }
+
+      // Edit subject name
+      function editSubjectName(semesterId, subjectId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const titleElement = document.getElementById(
+          `subject-title-${subjectId}`
+        );
+        const currentName = subject.name;
+
+        titleElement.innerHTML = `
+                <input type="text" class="editable-input" value="${currentName}" id="edit-subject-${subjectId}">
+                <button class="btn btn-sm btn-success ms-2" onclick="saveSubjectName(${semesterId}, ${subjectId})">
+                    <i class="fas fa-check"></i>
+                </button>
+                <button class="btn btn-sm btn-secondary ms-1" onclick="cancelEditSubjectName(${semesterId}, ${subjectId}, '${currentName}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+        document.getElementById(`edit-subject-${subjectId}`).focus();
+      }
+
+      // Save subject name
+      function saveSubjectName(semesterId, subjectId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const newName = document.getElementById(
+          `edit-subject-${subjectId}`
+        ).value;
+        if (!newName.trim()) {
+          alert("Nama mata kuliah tidak boleh kosong!");
+          return;
+        }
+
+        subject.name = newName;
+        saveToLocalStorage();
+        renderSemesters();
+      }
+
+      // Cancel edit subject name
+      function cancelEditSubjectName(semesterId, subjectId, originalName) {
+        const titleElement = document.getElementById(
+          `subject-title-${subjectId}`
+        );
+        titleElement.innerHTML = `
+                ${originalName}
+                <button class="btn btn-sm edit-btn ms-2" onclick="editSubjectName(${semesterId}, ${subjectId})">
+                    <i class="fas fa-edit"></i>
+                </button>
+            `;
+      }
+
+      // Edit task
+      function editTask(semesterId, subjectId, taskId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const task = subject.tasks.find((t) => t.id === taskId);
+        if (!task) return;
+
+        const taskElement = document.getElementById(`task-${taskId}`);
+
+        taskElement.innerHTML = `
+          <div class="edit-task-form">
+            <div class="mb-3">
+              <label class="form-label">Nama Tugas</label>
+              <input type="text" class="form-control" id="edit-task-name-${taskId}" value="${
+          task.name
+        }" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Jenis Tugas</label>
+              <select class="form-select" id="edit-task-type-${taskId}">
+                <option value="tugas" ${
+                  task.type === "tugas" ? "selected" : ""
+                }>Tugas</option>
+                <option value="quiz" ${
+                  task.type === "quiz" ? "selected" : ""
+                }>Quiz</option>
+                <option value="uts" ${
+                  task.type === "uts" ? "selected" : ""
+                }>UTS</option>
+                <option value="uas" ${
+                  task.type === "uas" ? "selected" : ""
+                }>UAS</option>
+                <option value="projek" ${
+                  task.type === "projek" ? "selected" : ""
+                }>Projek</option>
+                <option value="presentasi" ${
+                  task.type === "presentasi" ? "selected" : ""
+                }>Presentasi</option>
+                <option value="laporan" ${
+                  task.type === "laporan" ? "selected" : ""
+                }>Laporan</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Deadline</label>
+              <input type="date" class="form-control" id="edit-task-deadline-${taskId}" value="${
+          task.deadline
+        }" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prioritas</label>
+              <select class="form-select" id="edit-task-priority-${taskId}">
+                <option value="low" ${
+                  task.priority === "low" ? "selected" : ""
+                }>Rendah</option>
+                <option value="medium" ${
+                  task.priority === "medium" ? "selected" : ""
+                }>Sedang</option>
+                <option value="high" ${
+                  task.priority === "high" ? "selected" : ""
+                }>Tinggi</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Perkiraan Waktu Pengerjaan (menit)</label>
+              <input type="number" class="form-control" id="edit-task-estimated-time-${taskId}" value="${
+          task.estimatedTime || 0
+        }" min="1">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Deskripsi</label>
+              <textarea class="form-control" id="edit-task-description-${taskId}" rows="2">${
+          task.description || ""
+        }</textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-sm btn-success me-2" onclick="saveTaskChanges(${semesterId}, ${subjectId}, ${taskId})">
+                <i class="fas fa-check me-1"></i>Simpan
+              </button>
+              <button class="btn btn-sm btn-secondary" onclick="cancelEditTask(${semesterId}, ${subjectId}, ${taskId})">
+                <i class="fas fa-times me-1"></i>Batal
+              </button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById(`edit-task-name-${taskId}`).focus();
+      }
+
+      // Save task changes
+      function saveTaskChanges(semesterId, subjectId, taskId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const task = subject.tasks.find((t) => t.id === taskId);
+        if (!task) return;
+
+        const newName = document.getElementById(
+          `edit-task-name-${taskId}`
+        ).value;
+        const newType = document.getElementById(
+          `edit-task-type-${taskId}`
+        ).value;
+        const newDeadline = document.getElementById(
+          `edit-task-deadline-${taskId}`
+        ).value;
+        const newPriority = document.getElementById(
+          `edit-task-priority-${taskId}`
+        ).value;
+        const newEstimatedTime =
+          parseInt(
+            document.getElementById(`edit-task-estimated-time-${taskId}`).value
+          ) || 0;
+        const newDescription = document.getElementById(
+          `edit-task-description-${taskId}`
+        ).value;
+
+        if (!newName.trim()) {
+          alert("Nama tugas tidak boleh kosong!");
+          return;
+        }
+
+        if (!newDeadline) {
+          alert("Deadline harus diisi!");
+          return;
+        }
+
+        task.name = newName;
+        task.type = newType;
+        task.deadline = newDeadline;
+        task.priority = newPriority;
+        task.estimatedTime = newEstimatedTime;
+        task.description = newDescription;
+
+        saveToLocalStorage();
+        renderSemesters();
+        updateCalendarDisplay();
+        renderUpcomingDeadlines();
+
+        // Show success message
+        document.getElementById("successMessage").textContent =
+          "Tugas berhasil diupdate!";
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+        successModal.show();
+      }
+
+      // Cancel edit task
+      function cancelEditTask(semesterId, subjectId, taskId) {
+        renderSemesters();
+      }
+
+      // Render semesters
+      function renderSemesters(filter = "all") {
+        let filteredSemesters = semesters;
+
+        if (filter === "completed") {
+          filteredSemesters = semesters.filter((s) => {
+            // A semester is completed if all tasks in all subjects are completed
+            return (
+              s.subjects.length > 0 &&
+              s.subjects.every(
+                (sub) =>
+                  sub.tasks.length > 0 && sub.tasks.every((t) => t.completed)
+              )
+            );
+          });
+        } else if (filter === "in-progress") {
+          filteredSemesters = semesters.filter((s) => {
+            // A semester is in progress if it has at least one task that's completed and one that's not
+            const hasCompleted = s.subjects.some((sub) =>
+              sub.tasks.some((t) => t.completed)
+            );
+            const hasPending = s.subjects.some((sub) =>
+              sub.tasks.some((t) => !t.completed)
+            );
+            return hasCompleted && hasPending;
+          });
+        } else if (filter === "pending") {
+          filteredSemesters = semesters.filter((s) => {
+            // A semester is pending if all tasks are not completed
+            return s.subjects.some((sub) =>
+              sub.tasks.some((t) => !t.completed)
+            );
+          });
+        }
+
+        if (filteredSemesters.length === 0) {
+          semestersContainer.style.display = "none";
+          emptyState.style.display = "block";
+        } else {
+          semestersContainer.style.display = "flex";
+          emptyState.style.display = "none";
+
+          semestersContainer.innerHTML = "";
+
+          filteredSemesters.forEach((semester, index) => {
+            // Calculate totals for this semester
+            let totalSubjects = semester.subjects.length;
+            let totalTasks = 0;
+            let completedTasks = 0;
+            let totalCredits = 0;
+            let totalEstimatedTime = 0;
+
+            semester.subjects.forEach((subject) => {
+              totalCredits += subject.credits || 0;
+              subject.tasks.forEach((task) => {
+                totalTasks++;
+                totalEstimatedTime += task.estimatedTime || 0;
+                if (task.completed) completedTasks++;
+              });
+            });
+
+            const progressPercentage =
+              totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+            const isCompleted = totalTasks > 0 && completedTasks === totalTasks;
+
+            const semesterCard = document.createElement("div");
+            semesterCard.className = `col-12 semester-card`;
+            semesterCard.style.animationDelay = `${index * 0.1}s`;
+
+            semesterCard.innerHTML = `
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="semester-header d-flex justify-content-between align-items-center p-4" onclick="toggleSubjects(${
+                                  semester.id
+                                })">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            <span class="semester-badge semester-${
+                                              semester.number
+                                            }">S${semester.number}</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1">
+                                                Semester ${semester.number}
+                                                <button class="btn btn-sm edit-btn ms-2" onclick="event.stopPropagation(); editSemesterYear(${
+                                                  semester.id
+                                                })">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </h4>
+                                            <p class="mb-0">
+                                                <span id="semester-year-${
+                                                  semester.id
+                                                }" class="editable-title">
+                                                    ${semester.year}
+                                                </span>
+                                                ${
+                                                  totalCredits > 0
+                                                    ? ` • ${totalCredits} SKS`
+                                                    : ""
+                                                }
+                                                ${
+                                                  isCompleted
+                                                    ? '<span class="achievement-badge"><i class="fas fa-trophy me-1"></i>Selesai!</span>'
+                                                    : ""
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <span class="me-3 fw-bold">${completedTasks}/${totalTasks}</span>
+                                        <i id="toggle-icon-${
+                                          semester.id
+                                        }" class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="subjects-container" id="subjects-${
+                                  semester.id
+                                }">
+                                    <div class="p-4 pt-0">
+                                        ${
+                                          semester.description
+                                            ? `<p class="mb-3">${semester.description}</p>`
+                                            : ""
+                                        }
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="flex-grow-1 me-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <small class="text-muted">Progress: ${completedTasks} dari ${totalTasks} tugas</small>
+                                                    <small class="text-muted">${progressPercentage.toFixed(
+                                                      1
+                                                    )}%</small>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar ${
+                                                      isCompleted
+                                                        ? "bg-success"
+                                                        : "bg-primary"
+                                                    }" role="progressbar" style="width: ${progressPercentage}%"></div>
+                                                </div>
+                                                ${
+                                                  totalEstimatedTime > 0
+                                                    ? `<small class="text-muted">Perkiraan total waktu: ${Math.ceil(
+                                                        totalEstimatedTime / 60
+                                                      )} jam ${
+                                                        totalEstimatedTime % 60
+                                                      } menit</small>`
+                                                    : ""
+                                                }
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-sm btn-outline-primary me-2" onclick="openAddSubjectModal(${
+                                                  semester.id
+                                                })">
+                                                    <i class="fas fa-plus me-1"></i>Mata Kuliah
+                                                </button>
+                                                <button class="btn btn-sm delete-btn" onclick="deleteSemester(${
+                                                  semester.id
+                                                })">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="subjects-list mt-3">
+                                            ${
+                                              semester.subjects.length > 0
+                                                ? semester.subjects
+                                                    .map((subject) => {
+                                                      // Calculate totals for this subject
+                                                      let subjectTotalTasks = 0;
+                                                      let subjectCompletedTasks = 0;
+                                                      let subjectEstimatedTime = 0;
+
+                                                      subject.tasks.forEach(
+                                                        (task) => {
+                                                          subjectTotalTasks++;
+                                                          subjectEstimatedTime +=
+                                                            task.estimatedTime ||
+                                                            0;
+                                                          if (task.completed)
+                                                            subjectCompletedTasks++;
+                                                        }
+                                                      );
+
+                                                      const subjectProgress =
+                                                        subjectTotalTasks > 0
+                                                          ? (subjectCompletedTasks /
+                                                              subjectTotalTasks) *
+                                                            100
+                                                          : 0;
+                                                      const subjectCompleted =
+                                                        subjectTotalTasks > 0 &&
+                                                        subjectCompletedTasks ===
+                                                          subjectTotalTasks;
+
+                                                      return `
+                                                        <div class="subject-item hierarchy-indent">
+                                                            <div class="d-flex justify-content-between align-items-center mb-2" onclick="toggleTasks(${
+                                                              subject.id
+                                                            })">
+                                                                <div class="flex-grow-1">
+                                                                    <h5 class="mb-1">
+                                                                        <span id="subject-title-${
+                                                                          subject.id
+                                                                        }" class="editable-title">
+                                                                            ${
+                                                                              subject.name
+                                                                            }
+                                                                            <button class="btn btn-sm edit-btn ms-2" onclick="event.stopPropagation(); editSubjectName(${
+                                                                              semester.id
+                                                                            }, ${
+                                                        subject.id
+                                                      })">
+                                                                                <i class="fas fa-edit"></i>
+                                                                            </button>
+                                                                        </span>
+                                                                        ${
+                                                                          subjectCompleted
+                                                                            ? '<span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span>'
+                                                                            : ""
+                                                                        }
+                                                                    </h5>
+                                                                    <div class="d-flex flex-wrap gap-2">
+                                                                      ${
+                                                                        subject.code
+                                                                          ? `<small class="text-muted">${subject.code}</small>`
+                                                                          : ""
+                                                                      }
+                                                                      ${
+                                                                        subject.lecturer
+                                                                          ? `<small class="text-muted">Dosen: ${subject.lecturer}</small>`
+                                                                          : ""
+                                                                      }
+                                                                      ${
+                                                                        subject.credits
+                                                                          ? `<small class="text-muted">${subject.credits} SKS</small>`
+                                                                          : ""
+                                                                      }
+                                                                    </div>
+                                                                    ${
+                                                                      subject.description
+                                                                        ? `<small class="text-muted">${subject.description}</small>`
+                                                                        : ""
+                                                                    }
+                                                                </div>
+                                                                <div class="d-flex align-items-center">
+                                                                    <span class="me-3 text-muted">${
+                                                                      subject
+                                                                        .tasks
+                                                                        .length
+                                                                    } tugas</span>
+                                                                    <i id="task-toggle-icon-${
+                                                                      subject.id
+                                                                    }" class="fas fa-chevron-down"></i>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                                <div class="flex-grow-1 me-3">
+                                                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                                                        <small class="text-muted">Progress: ${subjectCompletedTasks} dari ${subjectTotalTasks} tugas</small>
+                                                                        <small class="text-muted">${subjectProgress.toFixed(
+                                                                          1
+                                                                        )}%</small>
+                                                                    </div>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar ${
+                                                                          subjectCompleted
+                                                                            ? "bg-success"
+                                                                            : "bg-info"
+                                                                        }" role="progressbar" style="width: ${subjectProgress}%"></div>
+                                                                    </div>
+                                                                    ${
+                                                                      subjectEstimatedTime >
+                                                                      0
+                                                                        ? `<small class="text-muted">Perkiraan waktu: ${Math.ceil(
+                                                                            subjectEstimatedTime /
+                                                                              60
+                                                                          )} jam ${
+                                                                            subjectEstimatedTime %
+                                                                            60
+                                                                          } menit</small>`
+                                                                        : ""
+                                                                    }
+                                                                </div>
+                                                                <div>
+                                                                    <button class="btn btn-sm btn-outline-primary me-2" onclick="openAddTaskModal(${
+                                                                      semester.id
+                                                                    }, ${
+                                                        subject.id
+                                                      })">
+                                                                        <i class="fas fa-plus me-1"></i>Tugas
+                                                                    </button>
+                                                                    <button class="btn btn-sm delete-btn" onclick="deleteSubject(${
+                                                                      semester.id
+                                                                    }, ${
+                                                        subject.id
+                                                      })">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="tasks-container" id="tasks-${
+                                                              subject.id
+                                                            }">
+                                                                <div class="tasks-list mt-3">
+                                                                    ${
+                                                                      subject
+                                                                        .tasks
+                                                                        .length >
+                                                                      0
+                                                                        ? subject.tasks
+                                                                            .map(
+                                                                              (
+                                                                                task
+                                                                              ) => {
+                                                                                const daysUntilDeadline =
+                                                                                  Math.ceil(
+                                                                                    (new Date(
+                                                                                      task.deadline
+                                                                                    ) -
+                                                                                      new Date()) /
+                                                                                      (1000 *
+                                                                                        60 *
+                                                                                        60 *
+                                                                                        24)
+                                                                                  );
+                                                                                let deadlineClass =
+                                                                                  "deadline-far";
+                                                                                let deadlineText = `${daysUntilDeadline} hari lagi`;
+
+                                                                                if (
+                                                                                  daysUntilDeadline <
+                                                                                  0
+                                                                                ) {
+                                                                                  deadlineClass =
+                                                                                    "deadline-urgent";
+                                                                                  deadlineText =
+                                                                                    "Terlambat!";
+                                                                                } else if (
+                                                                                  daysUntilDeadline <=
+                                                                                  1
+                                                                                ) {
+                                                                                  deadlineClass =
+                                                                                    "deadline-urgent";
+                                                                                  deadlineText =
+                                                                                    "Besok!";
+                                                                                } else if (
+                                                                                  daysUntilDeadline <=
+                                                                                  3
+                                                                                ) {
+                                                                                  deadlineClass =
+                                                                                    "deadline-near";
+                                                                                  deadlineText = `${daysUntilDeadline} hari lagi`;
+                                                                                }
+
+                                                                                let priorityClass =
+                                                                                  "";
+                                                                                let priorityText =
+                                                                                  "";
+                                                                                let priorityBadge =
+                                                                                  "";
+
+                                                                                if (
+                                                                                  task.priority ===
+                                                                                  "high"
+                                                                                ) {
+                                                                                  priorityClass =
+                                                                                    "priority-high";
+                                                                                  priorityText =
+                                                                                    "Tinggi";
+                                                                                  priorityBadge =
+                                                                                    '<span class="badge bg-danger priority-badge">Tinggi</span>';
+                                                                                } else if (
+                                                                                  task.priority ===
+                                                                                  "medium"
+                                                                                ) {
+                                                                                  priorityClass =
+                                                                                    "priority-medium";
+                                                                                  priorityText =
+                                                                                    "Sedang";
+                                                                                  priorityBadge =
+                                                                                    '<span class="badge bg-warning priority-badge">Sedang</span>';
+                                                                                } else {
+                                                                                  priorityClass =
+                                                                                    "priority-low";
+                                                                                  priorityText =
+                                                                                    "Rendah";
+                                                                                  priorityBadge =
+                                                                                    '<span class="badge bg-success priority-badge">Rendah</span>';
+                                                                                }
+
+                                                                                return `
+                                                                                <div class="task-row hierarchy-indent-2 ${priorityClass}" id="task-${
+                                                                                  task.id
+                                                                                }">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="flex-grow-1">
+                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                <h6 class="mb-1">${
+                                                                                                  task.name
+                                                                                                } ${
+                                                                                  task.completed
+                                                                                    ? '<span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span>'
+                                                                                    : priorityBadge
+                                                                                }</h6>
+                                                                                                <div>
+                                                                                                    <button class="btn btn-sm edit-btn me-2" onclick="editTask(${
+                                                                                                      semester.id
+                                                                                                    }, ${
+                                                                                  subject.id
+                                                                                }, ${
+                                                                                  task.id
+                                                                                })">
+                                                                                                        <i class="fas fa-edit"></i>
+                                                                                                    </button>
+                                                                                                    <button class="btn btn-sm ${
+                                                                                                      task.completed
+                                                                                                        ? "btn-warning"
+                                                                                                        : "btn-success"
+                                                                                                    } me-2" onclick="markTaskCompleted(${
+                                                                                  semester.id
+                                                                                }, ${
+                                                                                  subject.id
+                                                                                }, ${
+                                                                                  task.id
+                                                                                })">
+                                                                                                        <i class="fas ${
+                                                                                                          task.completed
+                                                                                                            ? "fa-undo"
+                                                                                                            : "fa-check"
+                                                                                                        }"></i>
+                                                                                                    </button>
+                                                                                                    <button class="btn btn-sm delete-btn" onclick="deleteTask(${
+                                                                                                      semester.id
+                                                                                                    }, ${
+                                                                                  subject.id
+                                                                                }, ${
+                                                                                  task.id
+                                                                                })">
+                                                                                                        <i class="fas fa-times"></i>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                                                                <small class="text-muted">${
+                                                                                                  task.type
+                                                                                                } • Deadline: ${new Date(
+                                                                                  task.deadline
+                                                                                ).toLocaleDateString(
+                                                                                  "id-ID"
+                                                                                )}</small>
+                                                                                                <small class="${deadlineClass}">${deadlineText}</small>
+                                                                                            </div>
+                                                                                            ${
+                                                                                              task.estimatedTime >
+                                                                                              0
+                                                                                                ? `<div class="mb-1"><small class="text-muted">Perkiraan waktu: ${Math.ceil(
+                                                                                                    task.estimatedTime /
+                                                                                                      60
+                                                                                                  )} jam ${
+                                                                                                    task.estimatedTime %
+                                                                                                    60
+                                                                                                  } menit</small></div>`
+                                                                                                : ""
+                                                                                            }
+                                                                                            ${
+                                                                                              task.description
+                                                                                                ? `<div class="mt-1"><small class="text-muted">${task.description}</small></div>`
+                                                                                                : ""
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            `;
+                                                                              }
+                                                                            )
+                                                                            .join(
+                                                                              ""
+                                                                            )
+                                                                        : `<div class="text-center py-3 text-muted">
+                                                                            <i class="fas fa-clipboard-list fa-2x mb-2"></i>
+                                                                            <p>Belum ada tugas</p>
+                                                                            <button class="btn btn-sm btn-outline-primary" onclick="openAddTaskModal(${semester.id}, ${subject.id})">
+                                                                                <i class="fas fa-plus me-1"></i>Tambah Tugas Pertama
+                                                                            </button>
+                                                                        </div>`
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    `;
+                                                    })
+                                                    .join("")
+                                                : `<div class="text-center py-3 text-muted">
+                                                    <i class="fas fa-book-open fa-2x mb-2"></i>
+                                                    <p>Belum ada mata kuliah</p>
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="openAddSubjectModal(${semester.id})">
+                                                        <i class="fas fa-plus me-1"></i>Tambah Mata Kuliah Pertama
+                                                    </button>
+                                                </div>`
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+            semestersContainer.appendChild(semesterCard);
+          });
+        }
+      }
+
+      // Filter semesters
+      function filterSemesters(filter) {
+        renderSemesters(filter);
+      }
+
+      // Render upcoming deadlines
+      function renderUpcomingDeadlines() {
+        // Collect all tasks from all semesters
+        let allTasks = [];
+        semesters.forEach((semester) => {
+          semester.subjects.forEach((subject) => {
+            subject.tasks.forEach((task) => {
+              allTasks.push({
+                ...task,
+                semesterNumber: semester.number,
+                subjectName: subject.name,
+              });
+            });
+          });
+        });
+
+        // Filter only pending tasks and sort by deadline
+        const pendingTasks = allTasks
+          .filter((task) => !task.completed)
+          .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+
+        if (pendingTasks.length === 0) {
+          upcomingDeadlines.style.display = "none";
+          emptyDeadlineState.style.display = "block";
+        } else {
+          upcomingDeadlines.style.display = "block";
+          emptyDeadlineState.style.display = "none";
+
+          upcomingDeadlines.innerHTML = "";
+
+          pendingTasks.forEach((task) => {
+            const daysUntilDeadline = Math.ceil(
+              (new Date(task.deadline) - new Date()) / (1000 * 60 * 60 * 24)
+            );
+            let deadlineClass = "deadline-far";
+            let deadlineText = `${daysUntilDeadline} hari lagi`;
+
+            if (daysUntilDeadline < 0) {
+              deadlineClass = "deadline-urgent";
+              deadlineText = "Terlambat!";
+            } else if (daysUntilDeadline <= 1) {
+              deadlineClass = "deadline-urgent";
+              deadlineText = "Besok!";
+            } else if (daysUntilDeadline <= 3) {
+              deadlineClass = "deadline-near";
+              deadlineText = `${daysUntilDeadline} hari lagi`;
+            }
+
+            const deadlineItem = document.createElement("div");
+            deadlineItem.className = "deadline-item";
+
+            deadlineItem.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">${task.name}</h6>
+                                <small class="text-muted">S${
+                                  task.semesterNumber
+                                } - ${task.subjectName} (${task.type})</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="${deadlineClass}">
+                                    ${deadlineText}
+                                </div>
+                                <small class="text-muted">${new Date(
+                                  task.deadline
+                                ).toLocaleDateString("id-ID")}</small>
+                            </div>
+                        </div>
+                    `;
+
+            upcomingDeadlines.appendChild(deadlineItem);
+          });
+        }
+      }
+
+      // Open add subject modal
+      function openAddSubjectModal(semesterId) {
+        document.getElementById("subjectSemesterId").value = semesterId;
+        const addSubjectModal = new bootstrap.Modal(
+          document.getElementById("addSubjectModal")
+        );
+        addSubjectModal.show();
+      }
+
+      // Open add task modal
+      function openAddTaskModal(semesterId, subjectId) {
+        document.getElementById("taskSemesterId").value = semesterId;
+        document.getElementById("taskSubjectId").value = subjectId;
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("taskDeadline").min = today;
+
+        const addTaskModal = new bootstrap.Modal(
+          document.getElementById("addTaskModal")
+        );
+        addTaskModal.show();
+      }
+
+      // Update statistics
+      function updateStats() {
+        const totalSemesters = semesters.length;
+        let totalSubjects = 0;
+        let totalTasks = 0;
+        let completedTasks = 0;
+
+        semesters.forEach((semester) => {
+          totalSubjects += semester.subjects.length;
+          semester.subjects.forEach((subject) => {
+            totalTasks += subject.tasks.length;
+            subject.tasks.forEach((task) => {
+              if (task.completed) completedTasks++;
+            });
+          });
+        });
+
+        totalSemestersEl.textContent = totalSemesters;
+        totalSubjectsEl.textContent = totalSubjects;
+        totalTasksEl.textContent = totalTasks;
+        completedTasksEl.textContent = completedTasks;
+      }
+
+      // Update calendar display
+      function updateCalendarDisplay() {
+        // Calculate upcoming tasks (tasks that are not completed and deadline is in the future)
+        let upcomingCount = 0;
+        const now = new Date();
+
+        semesters.forEach((semester) => {
+          semester.subjects.forEach((subject) => {
+            subject.tasks.forEach((task) => {
+              if (!task.completed && new Date(task.deadline) >= now) {
+                upcomingCount++;
+              }
+            });
+          });
+        });
+
+        upcomingTasksEl.textContent = upcomingCount;
+
+        // Update summary
+        let totalTasks = 0;
+        let completedTasks = 0;
+
+        semesters.forEach((semester) => {
+          semester.subjects.forEach((subject) => {
+            totalTasks += subject.tasks.length;
+            subject.tasks.forEach((task) => {
+              if (task.completed) completedTasks++;
+            });
+          });
+        });
+
+        const pendingTasks = totalTasks - completedTasks;
+
+        summaryTotalEl.textContent = totalTasks;
+        summaryCompletedEl.textContent = completedTasks;
+        summaryPendingEl.textContent = pendingTasks;
+
+        const progressPercentage =
+          totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+        summaryProgressEl.style.width = `${progressPercentage}%`;
+        summaryPercentageEl.textContent = `${progressPercentage.toFixed(
+          1
+        )}% selesai`;
+      }
+
+      // Save to localStorage
+      function saveToLocalStorage() {
+        localStorage.setItem("semesters", JSON.stringify(semesters));
+      }
+
+      // Create confetti animation
+      function createConfetti() {
+        const colors = ["#3498db", "#2980b9", "#e74c3c", "#2ecc71", "#f39c12"];
+
+        for (let i = 0; i < 100; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.width = Math.random() * 10 + 5 + "px";
+          confetti.style.height = Math.random() * 10 + 5 + "px";
+          confetti.style.animationDelay = Math.random() * 5 + "s";
+
+          document.body.appendChild(confetti);
+
+          // Remove confetti after animation
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }
+      }
+    </script>
+  </body>
+</html>
