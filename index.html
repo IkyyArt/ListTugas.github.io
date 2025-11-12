@@ -587,6 +587,50 @@
       .semester-8 {
         background: var(--semester-8);
       }
+
+      /* PERBAIKAN: Styling untuk link AI */
+      .ai-links {
+        margin-top: 8px;
+      }
+
+      .ai-link {
+        display: inline-block;
+        background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        text-decoration: none;
+        margin-right: 5px;
+        margin-bottom: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .ai-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 8px rgba(108, 92, 231, 0.3);
+        color: white;
+      }
+
+      .ai-link-chatgpt {
+        background: linear-gradient(135deg, #10a37f, #1a7f64);
+      }
+
+      .ai-link-deepseek {
+        background: linear-gradient(135deg, #4285f4, #3367d6);
+      }
+
+      .ai-link-other {
+        background: linear-gradient(135deg, #6c757d, #5a6268);
+      }
+
+      /* PERBAIKAN: Styling untuk form edit mata kuliah */
+      .edit-subject-form {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body>
@@ -995,6 +1039,49 @@
                   value="3"
                 />
               </div>
+              <!-- PERBAIKAN: Link AI sekarang hanya 2 input dengan 3 pilihan -->
+              <div class="mb-3">
+                <label class="form-label">Link AI (Opsional)</label>
+                <div class="ai-links-inputs">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text">
+                      <i class="fas fa-robot"></i>
+                    </span>
+                    <select class="form-select" id="subjectAiType1">
+                      <option value="">Pilih AI</option>
+                      <option value="chatgpt">ChatGPT</option>
+                      <option value="deepseek">DeepSeek</option>
+                      <option value="other">Lainnya</option>
+                    </select>
+                    <input
+                      type="url"
+                      class="form-control"
+                      id="subjectAiLink1"
+                      placeholder="https://chat.openai.com/..."
+                    />
+                  </div>
+                  <div class="input-group mb-2">
+                    <span class="input-group-text">
+                      <i class="fas fa-robot"></i>
+                    </span>
+                    <select class="form-select" id="subjectAiType2">
+                      <option value="">Pilih AI</option>
+                      <option value="chatgpt">ChatGPT</option>
+                      <option value="deepseek">DeepSeek</option>
+                      <option value="other">Lainnya</option>
+                    </select>
+                    <input
+                      type="url"
+                      class="form-control"
+                      id="subjectAiLink2"
+                      placeholder="https://chat.deepseek.com/..."
+                    />
+                  </div>
+                </div>
+                <small class="text-muted"
+                  >Tambahkan link AI yang membantu untuk mata kuliah ini</small
+                >
+              </div>
               <div class="mb-3">
                 <label for="subjectDescription" class="form-label"
                   >Deskripsi (Opsional)</label
@@ -1269,6 +1356,16 @@
           parseInt(document.getElementById("subjectCredits").value) || 0;
         const description = document.getElementById("subjectDescription").value;
 
+        // PERBAIKAN: Ambil data link AI (hanya 2 input sekarang)
+        const aiLinks = [];
+        for (let i = 1; i <= 2; i++) {
+          const aiType = document.getElementById(`subjectAiType${i}`).value;
+          const aiLink = document.getElementById(`subjectAiLink${i}`).value;
+          if (aiType && aiLink) {
+            aiLinks.push({ type: aiType, url: aiLink });
+          }
+        }
+
         if (!semesterId || !name) {
           alert("Nama mata kuliah harus diisi!");
           return;
@@ -1284,6 +1381,7 @@
           lecturer,
           credits,
           description,
+          aiLinks, // PERBAIKAN: Simpan link AI
           tasks: [],
         };
 
@@ -1600,6 +1698,216 @@
                     <i class="fas fa-edit"></i>
                 </button>
             `;
+      }
+
+      // PERBAIKAN: Fungsi untuk edit mata kuliah secara lengkap
+      function editSubject(semesterId, subjectId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const subjectElement = document.getElementById(`subject-${subjectId}`);
+
+        // Buat form edit
+        subjectElement.innerHTML = `
+          <div class="edit-subject-form">
+            <div class="mb-3">
+              <label class="form-label">Nama Mata Kuliah</label>
+              <input type="text" class="form-control" id="edit-subject-name-${subjectId}" value="${
+          subject.name
+        }" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Kode Mata Kuliah</label>
+              <input type="text" class="form-control" id="edit-subject-code-${subjectId}" value="${
+          subject.code || ""
+        }" placeholder="Contoh: TIF101, MKU002">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nama Dosen</label>
+              <input type="text" class="form-control" id="edit-subject-lecturer-${subjectId}" value="${
+          subject.lecturer || ""
+        }" placeholder="Nama dosen pengampu">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Jumlah SKS</label>
+              <input type="number" class="form-control" id="edit-subject-credits-${subjectId}" value="${
+          subject.credits || 3
+        }" min="1" max="6">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Link AI</label>
+              <div class="ai-links-inputs">
+                <div class="input-group mb-2">
+                  <span class="input-group-text">
+                    <i class="fas fa-robot"></i>
+                  </span>
+                  <select class="form-select" id="edit-subject-ai-type-1-${subjectId}">
+                    <option value="">Pilih AI</option>
+                    <option value="chatgpt" ${
+                      subject.aiLinks &&
+                      subject.aiLinks[0] &&
+                      subject.aiLinks[0].type === "chatgpt"
+                        ? "selected"
+                        : ""
+                    }>ChatGPT</option>
+                    <option value="deepseek" ${
+                      subject.aiLinks &&
+                      subject.aiLinks[0] &&
+                      subject.aiLinks[0].type === "deepseek"
+                        ? "selected"
+                        : ""
+                    }>DeepSeek</option>
+                    <option value="other" ${
+                      subject.aiLinks &&
+                      subject.aiLinks[0] &&
+                      subject.aiLinks[0].type === "other"
+                        ? "selected"
+                        : ""
+                    }>Lainnya</option>
+                  </select>
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="edit-subject-ai-link-1-${subjectId}"
+                    value="${
+                      subject.aiLinks && subject.aiLinks[0]
+                        ? subject.aiLinks[0].url
+                        : ""
+                    }"
+                    placeholder="https://chat.openai.com/..."
+                  >
+                </div>
+                <div class="input-group mb-2">
+                  <span class="input-group-text">
+                    <i class="fas fa-robot"></i>
+                  </span>
+                  <select class="form-select" id="edit-subject-ai-type-2-${subjectId}">
+                    <option value="">Pilih AI</option>
+                    <option value="chatgpt" ${
+                      subject.aiLinks &&
+                      subject.aiLinks[1] &&
+                      subject.aiLinks[1].type === "chatgpt"
+                        ? "selected"
+                        : ""
+                    }>ChatGPT</option>
+                    <option value="deepseek" ${
+                      subject.aiLinks &&
+                      subject.aiLinks[1] &&
+                      subject.aiLinks[1].type === "deepseek"
+                        ? "selected"
+                        : ""
+                    }>DeepSeek</option>
+                    <option value="other" ${
+                      subject.aiLinks &&
+                      subject.aiLinks[1] &&
+                      subject.aiLinks[1].type === "other"
+                        ? "selected"
+                        : ""
+                    }>Lainnya</option>
+                  </select>
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="edit-subject-ai-link-2-${subjectId}"
+                    value="${
+                      subject.aiLinks && subject.aiLinks[1]
+                        ? subject.aiLinks[1].url
+                        : ""
+                    }"
+                    placeholder="https://chat.deepseek.com/..."
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Deskripsi</label>
+              <textarea class="form-control" id="edit-subject-description-${subjectId}" rows="3" placeholder="Deskripsi tentang mata kuliah ini...">${
+          subject.description || ""
+        }</textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-sm btn-success me-2" onclick="saveSubjectChanges(${semesterId}, ${subjectId})">
+                <i class="fas fa-check me-1"></i>Simpan
+              </button>
+              <button class="btn btn-sm btn-secondary" onclick="cancelEditSubject(${semesterId}, ${subjectId})">
+                <i class="fas fa-times me-1"></i>Batal
+              </button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById(`edit-subject-name-${subjectId}`).focus();
+      }
+
+      // PERBAIKAN: Fungsi untuk menyimpan perubahan mata kuliah
+      function saveSubjectChanges(semesterId, subjectId) {
+        const semester = semesters.find((s) => s.id === semesterId);
+        if (!semester) return;
+
+        const subject = semester.subjects.find((sub) => sub.id === subjectId);
+        if (!subject) return;
+
+        const newName = document.getElementById(
+          `edit-subject-name-${subjectId}`
+        ).value;
+        const newCode = document.getElementById(
+          `edit-subject-code-${subjectId}`
+        ).value;
+        const newLecturer = document.getElementById(
+          `edit-subject-lecturer-${subjectId}`
+        ).value;
+        const newCredits =
+          parseInt(
+            document.getElementById(`edit-subject-credits-${subjectId}`).value
+          ) || 0;
+        const newDescription = document.getElementById(
+          `edit-subject-description-${subjectId}`
+        ).value;
+
+        // Ambil data link AI yang baru
+        const newAiLinks = [];
+        for (let i = 1; i <= 2; i++) {
+          const aiType = document.getElementById(
+            `edit-subject-ai-type-${i}-${subjectId}`
+          ).value;
+          const aiLink = document.getElementById(
+            `edit-subject-ai-link-${i}-${subjectId}`
+          ).value;
+          if (aiType && aiLink) {
+            newAiLinks.push({ type: aiType, url: aiLink });
+          }
+        }
+
+        if (!newName.trim()) {
+          alert("Nama mata kuliah tidak boleh kosong!");
+          return;
+        }
+
+        subject.name = newName;
+        subject.code = newCode;
+        subject.lecturer = newLecturer;
+        subject.credits = newCredits;
+        subject.description = newDescription;
+        subject.aiLinks = newAiLinks;
+
+        saveToLocalStorage();
+        renderSemesters();
+
+        // Show success message
+        document.getElementById("successMessage").textContent =
+          "Mata kuliah berhasil diupdate!";
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+        successModal.show();
+      }
+
+      // PERBAIKAN: Fungsi untuk membatalkan edit mata kuliah
+      function cancelEditSubject(semesterId, subjectId) {
+        renderSemesters();
       }
 
       // Edit task
@@ -1960,8 +2268,42 @@
                                                         subjectCompletedTasks ===
                                                           subjectTotalTasks;
 
+                                                      // PERBAIKAN: Render link AI untuk mata kuliah
+                                                      const aiLinksHTML =
+                                                        subject.aiLinks &&
+                                                        subject.aiLinks.length >
+                                                          0
+                                                          ? `
+                                                          <div class="ai-links mt-2">
+                                                            ${subject.aiLinks
+                                                              .map(
+                                                                (ai) => `
+                                                              <a href="${
+                                                                ai.url
+                                                              }" target="_blank" class="ai-link ai-link-${
+                                                                  ai.type
+                                                                }">
+                                                                <i class="fas fa-robot me-1"></i>${
+                                                                  ai.type ===
+                                                                  "chatgpt"
+                                                                    ? "ChatGPT"
+                                                                    : ai.type ===
+                                                                      "deepseek"
+                                                                    ? "DeepSeek"
+                                                                    : "AI"
+                                                                }
+                                                              </a>
+                                                            `
+                                                              )
+                                                              .join("")}
+                                                          </div>
+                                                        `
+                                                          : "";
+
                                                       return `
-                                                        <div class="subject-item hierarchy-indent">
+                                                        <div class="subject-item hierarchy-indent" id="subject-${
+                                                          subject.id
+                                                        }">
                                                             <div class="d-flex justify-content-between align-items-center mb-2" onclick="toggleTasks(${
                                                               subject.id
                                                             })">
@@ -1973,7 +2315,7 @@
                                                                             ${
                                                                               subject.name
                                                                             }
-                                                                            <button class="btn btn-sm edit-btn ms-2" onclick="event.stopPropagation(); editSubjectName(${
+                                                                            <button class="btn btn-sm edit-btn ms-2" onclick="event.stopPropagation(); editSubject(${
                                                                               semester.id
                                                                             }, ${
                                                         subject.id
@@ -2004,6 +2346,8 @@
                                                                           : ""
                                                                       }
                                                                     </div>
+                                                                    <!-- PERBAIKAN: Tampilkan link AI di sini -->
+                                                                    ${aiLinksHTML}
                                                                     ${
                                                                       subject.description
                                                                         ? `<small class="text-muted">${subject.description}</small>`
