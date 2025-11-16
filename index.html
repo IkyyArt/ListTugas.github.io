@@ -2,7 +2,10 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>StudyPlanner - Kelola Tugas & PR</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -33,6 +36,12 @@
         --semester-8: #e67e22;
       }
 
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         min-height: 100vh;
@@ -41,12 +50,30 @@
         overflow-x: hidden;
       }
 
+      /* Navbar Mobile Friendly */
       .navbar {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
       }
 
+      .navbar-brand {
+        font-weight: 700;
+        color: var(--primary) !important;
+        font-size: 1.2rem;
+      }
+
+      .navbar-toggler {
+        border: none;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .navbar-toggler:focus {
+        box-shadow: none;
+      }
+
+      /* Hero Section Mobile */
       .hero-section {
         background: linear-gradient(
           135deg,
@@ -54,7 +81,7 @@
           var(--secondary) 100%
         );
         color: white;
-        padding: 5rem 0;
+        padding: 3rem 0;
         border-radius: 0 0 30px 30px;
         position: relative;
         overflow: hidden;
@@ -72,6 +99,88 @@
         background-position: center;
       }
 
+      .hero-title {
+        font-weight: 800;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+      }
+
+      /* Stats Section Mobile */
+      .stats-section {
+        margin-top: -2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .stats-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: all 0.3s ease;
+        height: 100%;
+        margin-bottom: 1rem;
+      }
+
+      .stats-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        line-height: 1;
+      }
+
+      .stats-label {
+        color: #6c757d;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      /* Main Content Mobile */
+      .main-content {
+        padding: 3rem 0;
+      }
+
+      .section-title {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+        font-size: 1.5rem;
+      }
+
+      /* Tabs Mobile */
+      .nav-tabs {
+        border-bottom: 2px solid #e9ecef;
+        margin-bottom: 1.5rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .nav-tabs .nav-link {
+        border: none;
+        color: #6c757d;
+        font-weight: 600;
+        padding: 0.75rem 1rem;
+        border-radius: 10px 10px 0 0;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+        min-width: auto;
+      }
+
+      .nav-tabs .nav-link.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      /* Cards Mobile */
       .card {
         border: none;
         border-radius: 15px;
@@ -102,79 +211,73 @@
         }
       }
 
+      /* Progress Bars Mobile */
       .progress {
-        height: 10px;
+        height: 8px;
         border-radius: 10px;
-        margin: 10px 0;
+        margin: 0.75rem 0;
+        background: #e9ecef;
+      }
+
+      .progress-bar {
+        border-radius: 10px;
+        transition: width 0.5s ease;
+      }
+
+      /* Buttons Mobile */
+      .btn {
+        border-radius: 50px;
+        padding: 0.6rem 1.25rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .btn-primary {
         background: var(--primary);
         border: none;
-        border-radius: 50px;
-        padding: 10px 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
       }
 
       .btn-primary:hover {
         background: var(--secondary);
-        transform: scale(1.05);
+        transform: translateY(-2px);
       }
 
       .btn-success {
         background: var(--success);
         border: none;
-        border-radius: 50px;
-        padding: 10px 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
       }
 
-      .btn-success:hover {
-        transform: scale(1.05);
-      }
-
-      .btn-warning {
-        background: var(--warning);
+      .btn-light {
+        background: white;
         border: none;
-        border-radius: 50px;
-        padding: 10px 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        color: white;
+        color: var(--dark);
       }
 
-      .btn-warning:hover {
-        transform: scale(1.05);
+      .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        min-height: 36px;
       }
 
-      .btn-danger {
-        background: var(--danger);
-        border: none;
-        border-radius: 50px;
-        padding: 10px 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-      }
-
-      .btn-danger:hover {
-        transform: scale(1.05);
-      }
-
+      /* Floating Button Mobile */
       .floating-btn {
         position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
         background: var(--accent);
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 24px;
+        font-size: 1.25rem;
         box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
         z-index: 1000;
         transition: all 0.3s ease;
@@ -198,18 +301,52 @@
         }
       }
 
+      /* Empty State Mobile */
+      .empty-state {
+        text-align: center;
+        padding: 2.5rem 1rem;
+        color: #6c757d;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #dee2e6;
+      }
+
+      .empty-state h3 {
+        margin-bottom: 0.75rem;
+        color: #6c757d;
+        font-size: 1.25rem;
+      }
+
+      /* Modal Mobile */
       .modal-content {
         border-radius: 15px;
         border: none;
         box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
       }
 
+      .modal-header {
+        padding: 1.25rem;
+      }
+
+      .modal-body {
+        padding: 1.25rem;
+      }
+
+      .modal-footer {
+        padding: 1rem 1.25rem;
+      }
+
+      /* Form Controls Mobile */
       .form-control,
       .form-select {
         border-radius: 10px;
-        padding: 12px 15px;
+        padding: 0.75rem;
         border: 1px solid #e0e0e0;
         transition: all 0.3s ease;
+        font-size: 1rem;
       }
 
       .form-control:focus,
@@ -218,63 +355,32 @@
         box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
       }
 
-      .stats-card {
-        text-align: center;
-        padding: 1.5rem;
+      /* Calendar Section Mobile */
+      .deadline-card {
+        background: linear-gradient(135deg, var(--info), #16a085);
+        color: white;
         border-radius: 15px;
-        background: white;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(26, 188, 156, 0.3);
         transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
       }
 
-      .stats-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      }
-
-      .stats-number {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 0.5rem;
-      }
-
-      .empty-state {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: #6c757d;
-      }
-
-      .empty-state i {
-        font-size: 4rem;
+      .deadline-amount {
+        font-size: 2rem;
+        font-weight: 800;
         margin-bottom: 1rem;
-        color: #dee2e6;
       }
 
-      .delete-btn {
-        color: #e74c3c;
-        background: none;
-        border: none;
-        transition: all 0.3s ease;
+      .calendar-summary {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        height: 100%;
       }
 
-      .delete-btn:hover {
-        color: #c0392b;
-        transform: scale(1.2);
-      }
-
-      .edit-btn {
-        color: var(--primary);
-        background: none;
-        border: none;
-        transition: all 0.3s ease;
-      }
-
-      .edit-btn:hover {
-        color: var(--secondary);
-        transform: scale(1.2);
-      }
-
+      /* Subject and Task Items Mobile */
       .subject-item {
         background: #f8f9fa;
         border-radius: 10px;
@@ -383,25 +489,8 @@
       footer {
         background: var(--dark);
         color: white;
-        padding: 3rem 0;
-        margin-top: 5rem;
-      }
-
-      .tab-content {
-        padding: 20px 0;
-      }
-
-      .nav-tabs .nav-link {
-        border: none;
-        color: var(--dark);
-        font-weight: 600;
-        padding: 12px 25px;
-        border-radius: 10px 10px 0 0;
-      }
-
-      .nav-tabs .nav-link.active {
-        background: var(--primary);
-        color: white;
+        padding: 2rem 0;
+        margin-top: 3rem;
       }
 
       .task-progress {
@@ -446,26 +535,6 @@
         margin-left: 40px;
       }
 
-      .deadline-card {
-        background: linear-gradient(135deg, var(--info), #16a085);
-        color: white;
-        border-radius: 15px;
-        padding: 2rem;
-        box-shadow: 0 10px 30px rgba(26, 188, 156, 0.3);
-        transition: all 0.3s ease;
-      }
-
-      .deadline-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(26, 188, 156, 0.4);
-      }
-
-      .deadline-amount {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-      }
-
       .priority-high {
         border-left: 4px solid var(--danger) !important;
       }
@@ -476,13 +545,6 @@
 
       .priority-low {
         border-left: 4px solid var(--success) !important;
-      }
-
-      .calendar-summary {
-        background: white;
-        border-radius: 15px;
-        padding: 1.5rem;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
       }
 
       .task-link {
@@ -631,13 +693,96 @@
         border-radius: 8px;
         margin-top: 10px;
       }
+
+      /* Delete and Edit Buttons */
+      .delete-btn {
+        color: #e74c3c;
+        background: none;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .delete-btn:hover {
+        color: #c0392b;
+        transform: scale(1.2);
+      }
+
+      .edit-btn {
+        color: var(--primary);
+        background: none;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .edit-btn:hover {
+        color: var(--secondary);
+        transform: scale(1.2);
+      }
+
+      /* Mobile-specific improvements */
+      @media (max-width: 576px) {
+        .container {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .hero-title {
+          font-size: 1.75rem;
+        }
+
+        .hero-subtitle {
+          font-size: 0.9rem;
+        }
+
+        .stats-number {
+          font-size: 1.75rem;
+        }
+
+        .deadline-amount {
+          font-size: 1.75rem;
+        }
+
+        .section-title {
+          font-size: 1.25rem;
+        }
+
+        .btn {
+          width: 100%;
+          margin-bottom: 0.5rem;
+        }
+
+        .btn-group .btn {
+          width: auto;
+          margin-bottom: 0;
+        }
+
+        .d-flex.justify-content-between {
+          flex-direction: column;
+        }
+
+        .d-flex.justify-content-between > * {
+          margin-bottom: 0.75rem;
+        }
+
+        .d-flex.justify-content-between > *:last-child {
+          margin-bottom: 0;
+        }
+
+        .hierarchy-indent {
+          margin-left: 10px;
+        }
+
+        .hierarchy-indent-2 {
+          margin-left: 20px;
+        }
+      }
     </style>
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="#" style="color: var(--primary)">
+        <a class="navbar-brand" href="#">
           <i class="fas fa-graduation-cap me-2"></i>StudyPlanner
         </a>
         <button
@@ -667,8 +812,8 @@
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="container text-center position-relative">
-        <h1 class="display-4 fw-bold mb-4">StudyPlanner - Manajemen Studi</h1>
-        <p class="lead mb-4">
+        <h1 class="hero-title">StudyPlanner - Manajemen Studi</h1>
+        <p class="hero-subtitle">
           Kelola semua mata kuliah dan tugas perkuliahanmu dengan sistem
           semester
         </p>
@@ -683,204 +828,218 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="container my-5">
-      <div class="row g-4">
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-number" id="totalSemesters">0</div>
-            <div class="stats-label">Total Semester</div>
+    <section class="stats-section">
+      <div class="container">
+        <div class="row g-3">
+          <div class="col-6 col-md-3">
+            <div class="stats-card fade-in">
+              <div class="stats-number" id="totalSemesters">0</div>
+              <div class="stats-label">Total Semester</div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-number" id="totalSubjects">0</div>
-            <div class="stats-label">Mata Kuliah</div>
+          <div class="col-6 col-md-3">
+            <div class="stats-card fade-in" style="animation-delay: 0.1s">
+              <div class="stats-number" id="totalSubjects">0</div>
+              <div class="stats-label">Mata Kuliah</div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-number" id="totalTasks">0</div>
-            <div class="stats-label">Total Tugas</div>
+          <div class="col-6 col-md-3">
+            <div class="stats-card fade-in" style="animation-delay: 0.2s">
+              <div class="stats-number" id="totalTasks">0</div>
+              <div class="stats-label">Total Tugas</div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-number" id="completedTasks">0</div>
-            <div class="stats-label">Tugas Selesai</div>
+          <div class="col-6 col-md-3">
+            <div class="stats-card fade-in" style="animation-delay: 0.3s">
+              <div class="stats-number" id="completedTasks">0</div>
+              <div class="stats-label">Tugas Selesai</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Calendar Section -->
-    <section class="container my-5" id="calendar">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="deadline-card">
-            <div class="row align-items-center">
-              <div class="col-md-6">
-                <h3 class="mb-3">Tugas Mendatang</h3>
-                <div class="deadline-amount" id="upcomingTasks">0</div>
-                <p class="mb-0">Tugas dengan deadline terdekat</p>
-              </div>
-              <div class="col-md-6 text-end">
-                <button
-                  class="btn btn-light btn-lg me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addTaskModal"
-                >
-                  <i class="fas fa-plus me-2"></i>Tambah Tugas
-                </button>
+    <section class="main-content" id="calendar">
+      <div class="container">
+        <h2 class="section-title">Kalender & Deadline</h2>
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="deadline-card">
+              <div class="row align-items-center">
+                <div class="col-12 col-md-6 mb-3 mb-md-0">
+                  <h3 class="mb-2">Tugas Mendatang</h3>
+                  <div class="deadline-amount" id="upcomingTasks">0</div>
+                  <p class="mb-0">Tugas dengan deadline terdekat</p>
+                </div>
+                <div class="col-12 col-md-6 text-md-end">
+                  <button
+                    class="btn btn-light"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addTaskModal"
+                  >
+                    <i class="fas fa-plus me-2"></i>Tambah Tugas
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="calendar-summary">
-            <h4 class="mb-3">Ringkasan Tugas</h4>
-            <div class="d-flex justify-content-between mb-2">
-              <span>Total Tugas:</span>
-              <strong id="summaryTotal">0</strong>
+          <div class="col-12">
+            <div class="calendar-summary">
+              <h4 class="mb-3">Ringkasan Tugas</h4>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Total Tugas:</span>
+                <strong id="summaryTotal">0</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Tugas Selesai:</span>
+                <strong id="summaryCompleted">0</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <span>Tugas Tertunda:</span>
+                <strong id="summaryPending">0</strong>
+              </div>
+              <div class="progress mb-2">
+                <div
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  id="summaryProgress"
+                  style="width: 0%"
+                ></div>
+              </div>
+              <small class="text-muted" id="summaryPercentage"
+                >0% selesai</small
+              >
             </div>
-            <div class="d-flex justify-content-between mb-2">
-              <span>Tugas Selesai:</span>
-              <strong id="summaryCompleted">0</strong>
-            </div>
-            <div class="d-flex justify-content-between mb-3">
-              <span>Tugas Tertunda:</span>
-              <strong id="summaryPending">0</strong>
-            </div>
-            <div class="progress mb-2">
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                id="summaryProgress"
-                style="width: 0%"
-              ></div>
-            </div>
-            <small class="text-muted" id="summaryPercentage">0% selesai</small>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Main Content -->
-    <section class="container my-5">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="semesters-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#semesters"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-calendar-alt me-2"></i>Semester
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="deadlines-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#deadlines"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-clock me-2"></i>Deadline Mendatang
-          </button>
-        </li>
-      </ul>
+    <section class="main-content" id="semesters">
+      <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="semesters-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#semesters-content"
+              type="button"
+              role="tab"
+            >
+              <i class="fas fa-calendar-alt me-2"></i>Semester
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="deadlines-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#deadlines-content"
+              type="button"
+              role="tab"
+            >
+              <i class="fas fa-clock me-2"></i>Deadline Mendatang
+            </button>
+          </li>
+        </ul>
 
-      <div class="tab-content" id="myTabContent">
-        <!-- Semesters Tab -->
-        <div class="tab-pane fade show active" id="semesters" role="tabpanel">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Daftar Semester</h2>
-            <div class="dropdown">
+        <div class="tab-content" id="myTabContent">
+          <!-- Semesters Tab -->
+          <div
+            class="tab-pane fade show active"
+            id="semesters-content"
+            role="tabpanel"
+          >
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="section-title mb-0">Daftar Semester</h2>
+              <div class="dropdown">
+                <button
+                  class="btn btn-outline-primary btn-sm dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="fas fa-filter me-1"></i>Filter
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="dropdown-item filter-option"
+                      data-filter="all"
+                      href="#"
+                      >Semua</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item filter-option"
+                      data-filter="completed"
+                      href="#"
+                      >Selesai</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item filter-option"
+                      data-filter="in-progress"
+                      href="#"
+                      >Dalam Proses</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item filter-option"
+                      data-filter="pending"
+                      href="#"
+                      >Belum Dimulai</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div id="semestersContainer">
+              <!-- Semester items will be dynamically added here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+              <i class="fas fa-calendar-plus"></i>
+              <h3>Belum Ada Semester</h3>
+              <p>
+                Mulai tambahkan semester dan mata kuliah untuk mengatur jadwal
+                studimu!
+              </p>
               <button
-                class="btn btn-outline-primary dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
+                class="btn btn-primary mt-3"
+                data-bs-toggle="modal"
+                data-bs-target="#addSemesterModal"
               >
-                <i class="fas fa-filter me-2"></i>Filter
+                <i class="fas fa-plus me-2"></i>Tambah Semester Pertama
               </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a
-                    class="dropdown-item filter-option"
-                    data-filter="all"
-                    href="#"
-                    >Semua</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item filter-option"
-                    data-filter="completed"
-                    href="#"
-                    >Selesai</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item filter-option"
-                    data-filter="in-progress"
-                    href="#"
-                    >Dalam Proses</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item filter-option"
-                    data-filter="pending"
-                    href="#"
-                    >Belum Dimulai</a
-                  >
-                </li>
-              </ul>
             </div>
           </div>
 
-          <div id="semestersContainer" class="row">
-            <!-- Semester items will be dynamically added here -->
-          </div>
+          <!-- Deadlines Tab -->
+          <div class="tab-pane fade" id="deadlines-content" role="tabpanel">
+            <h2 class="section-title">Deadline Tugas Mendatang</h2>
 
-          <!-- Empty State -->
-          <div id="emptyState" class="empty-state">
-            <i class="fas fa-calendar-plus"></i>
-            <h3>Belum Ada Semester</h3>
-            <p>
-              Mulai tambahkan semester dan mata kuliah untuk mengatur jadwal
-              studimu!
-            </p>
-            <button
-              class="btn btn-primary mt-3"
-              data-bs-toggle="modal"
-              data-bs-target="#addSemesterModal"
-            >
-              <i class="fas fa-plus me-2"></i>Tambah Semester Pertama
-            </button>
-          </div>
-        </div>
+            <div class="card border-0 shadow-sm">
+              <div class="card-body p-0">
+                <div class="upcoming-deadlines" id="upcomingDeadlines">
+                  <!-- Deadline items will be dynamically added here -->
+                </div>
 
-        <!-- Deadlines Tab -->
-        <div class="tab-pane fade" id="deadlines" role="tabpanel">
-          <h2 class="fw-bold mb-4">Deadline Tugas Mendatang</h2>
-
-          <div class="card">
-            <div class="card-body">
-              <div class="upcoming-deadlines" id="upcomingDeadlines">
-                <!-- Deadline items will be dynamically added here -->
-              </div>
-
-              <div id="emptyDeadlineState" class="empty-state py-4">
-                <i class="fas fa-calendar-check"></i>
-                <h5>Belum Ada Deadline</h5>
-                <p>
-                  Tambahkan tugas dengan deadline untuk melihat jadwal di sini!
-                </p>
+                <div id="emptyDeadlineState" class="empty-state py-4">
+                  <i class="fas fa-calendar-check"></i>
+                  <h5>Belum Ada Deadline</h5>
+                  <p>
+                    Tambahkan tugas dengan deadline untuk melihat jadwal di
+                    sini!
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -2109,7 +2268,7 @@
           semestersContainer.style.display = "none";
           emptyState.style.display = "block";
         } else {
-          semestersContainer.style.display = "flex";
+          semestersContainer.style.display = "block";
           emptyState.style.display = "none";
 
           semestersContainer.innerHTML = "";
@@ -2136,7 +2295,7 @@
             const isCompleted = totalTasks > 0 && completedTasks === totalTasks;
 
             const semesterCard = document.createElement("div");
-            semesterCard.className = `col-12 semester-card`;
+            semesterCard.className = `semester-card fade-in`;
             semesterCard.style.animationDelay = `${index * 0.1}s`;
 
             semesterCard.innerHTML = `
