@@ -18,23 +18,15 @@
     />
     <style>
       :root {
-        --primary: #3498db;
-        --secondary: #2980b9;
+        --primary: #2c3e50;
+        --secondary: #3498db;
         --accent: #e74c3c;
-        --light: #f8f9fa;
+        --light: #ecf0f1;
         --dark: #2c3e50;
-        --success: #2ecc71;
+        --success: #27ae60;
         --warning: #f39c12;
-        --danger: #e74c3c;
+        --danger: #c0392b;
         --info: #1abc9c;
-        --semester-1: #3498db;
-        --semester-2: #2ecc71;
-        --semester-3: #e74c3c;
-        --semester-4: #f39c12;
-        --semester-5: #9b59b6;
-        --semester-6: #1abc9c;
-        --semester-7: #34495e;
-        --semester-8: #e67e22;
       }
 
       * {
@@ -44,14 +36,13 @@
       }
 
       body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
         min-height: 100vh;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         color: var(--dark);
         overflow-x: hidden;
       }
 
-      /* Navbar Mobile Friendly */
       .navbar {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
@@ -65,16 +56,6 @@
         font-size: 1.2rem;
       }
 
-      .navbar-toggler {
-        border: none;
-        padding: 0.25rem 0.5rem;
-      }
-
-      .navbar-toggler:focus {
-        box-shadow: none;
-      }
-
-      /* Hero Section Mobile */
       .hero-section {
         background: linear-gradient(
           135deg,
@@ -103,16 +84,15 @@
       .hero-title {
         font-weight: 800;
         margin-bottom: 1rem;
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
         margin-bottom: 1.5rem;
         opacity: 0.9;
       }
 
-      /* Stats Section Mobile */
       .stats-section {
         margin-top: -2rem;
         position: relative;
@@ -128,6 +108,12 @@
         transition: all 0.3s ease;
         height: 100%;
         margin-bottom: 1rem;
+        border: 2px solid transparent;
+      }
+
+      .stats-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
       }
 
       .stats-number {
@@ -144,7 +130,6 @@
         font-size: 0.9rem;
       }
 
-      /* Main Content Mobile */
       .main-content {
         padding: 3rem 0;
       }
@@ -156,83 +141,119 @@
         font-size: 1.5rem;
       }
 
-      /* Tabs Mobile */
-      .nav-tabs {
-        border-bottom: 2px solid #e9ecef;
-        margin-bottom: 1.5rem;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-
-      .nav-tabs .nav-link {
-        border: none;
-        color: #6c757d;
-        font-weight: 600;
-        padding: 0.75rem 1rem;
-        border-radius: 10px 10px 0 0;
-        transition: all 0.3s;
-        font-size: 0.9rem;
-        min-width: auto;
-      }
-
-      .nav-tabs .nav-link.active {
-        background: var(--primary);
-        color: white;
-      }
-
-      /* Cards Mobile */
-      .card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
-        overflow: hidden;
-        margin-bottom: 1.5rem;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-      }
-
+      /* Semester Card - STYLING SEPERTI WISHLIST */
       .semester-card {
-        animation: fadeIn 0.5s ease forwards;
-        opacity: 0;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+        border: 2px solid var(--primary);
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .semester-header {
+        padding: 1.5rem;
+        background: rgba(44, 62, 80, 0.05);
+        cursor: pointer;
+        transition: background 0.3s;
+        border-bottom: 2px solid var(--primary);
       }
 
-      /* Progress Bars Mobile */
-      .progress {
-        height: 8px;
-        border-radius: 10px;
-        margin: 0.75rem 0;
-        background: #e9ecef;
+      .semester-header:hover {
+        background: rgba(44, 62, 80, 0.1);
       }
 
-      .progress-bar {
-        border-radius: 10px;
-        transition: width 0.5s ease;
+      .semester-title {
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
       }
 
-      /* Buttons Mobile */
+      .semester-meta {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      .semester-content {
+        padding: 1.5rem;
+      }
+
+      /* Subject Card - STYLING SEPERTI WISHLIST */
+      .subject-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--secondary);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .subject-header {
+        cursor: pointer;
+        margin-bottom: 1rem;
+      }
+
+      .subject-title {
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 0.25rem;
+        font-size: 1.1rem;
+      }
+
+      .subject-meta {
+        color: #6c757d;
+        font-size: 0.8rem;
+      }
+
+      /* Task Item - STYLING SEPERTI WISHLIST */
+      .task-item {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+      }
+
+      .task-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .task-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .task-info {
+        flex: 1;
+      }
+
+      .task-name {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+
+      .task-deadline {
+        color: #6c757d;
+        font-size: 0.8rem;
+      }
+
+      .task-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
       .btn {
-        border-radius: 50px;
-        padding: 0.6rem 1.25rem;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
         font-weight: 600;
         transition: all 0.3s ease;
         font-size: 0.9rem;
-        min-height: 44px;
+        min-height: 40px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -244,7 +265,7 @@
       }
 
       .btn-primary:hover {
-        background: var(--secondary);
+        background: #2c3e50;
         transform: translateY(-2px);
       }
 
@@ -253,19 +274,23 @@
         border: none;
       }
 
+      .btn-warning {
+        background: var(--warning);
+        border: none;
+      }
+
       .btn-light {
         background: white;
-        border: none;
+        border: 1px solid #dee2e6;
         color: var(--dark);
       }
 
       .btn-sm {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
-        min-height: 36px;
+        min-height: 32px;
       }
 
-      /* Floating Button Mobile */
       .floating-btn {
         position: fixed;
         bottom: 1.5rem;
@@ -302,7 +327,6 @@
         }
       }
 
-      /* Empty State Mobile */
       .empty-state {
         text-align: center;
         padding: 2.5rem 1rem;
@@ -321,59 +345,76 @@
         font-size: 1.25rem;
       }
 
-      /* Modal Mobile */
       .modal-content {
         border-radius: 15px;
         border: none;
         box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
       }
 
-      .modal-header {
-        padding: 1.25rem;
-      }
-
-      .modal-body {
-        padding: 1.25rem;
-      }
-
-      .modal-footer {
-        padding: 1rem 1.25rem;
-      }
-
-      /* Form Controls Mobile */
       .form-control,
       .form-select {
-        border-radius: 10px;
+        border-radius: 8px;
         padding: 0.75rem;
         border: 1px solid #e0e0e0;
         transition: all 0.3s ease;
-        font-size: 1rem;
       }
 
       .form-control:focus,
       .form-select:focus {
         border-color: var(--primary);
-        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25);
       }
 
-      /* Calendar Section Mobile */
-      .deadline-card {
-        background: linear-gradient(135deg, var(--info), #16a085);
+      .badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .progress {
+        height: 8px;
+        margin: 0.5rem 0;
+      }
+
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background-color: var(--primary);
+        top: -10px;
+        border-radius: 50%;
+        animation: confetti-fall 5s linear forwards;
+        z-index: 10000;
+      }
+
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Calendar Section */
+      .calendar-card {
+        background: linear-gradient(135deg, var(--success), #00a085);
         color: white;
         border-radius: 15px;
         padding: 1.5rem;
-        box-shadow: 0 10px 30px rgba(26, 188, 156, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 184, 148, 0.3);
         transition: all 0.3s ease;
         margin-bottom: 1.5rem;
       }
 
-      .deadline-amount {
+      .calendar-amount {
         font-size: 2rem;
         font-weight: 800;
         margin-bottom: 1rem;
       }
 
-      .calendar-summary {
+      .summary-card {
         background: white;
         border-radius: 15px;
         padding: 1.5rem;
@@ -381,400 +422,102 @@
         height: 100%;
       }
 
-      /* Subject and Task Items Mobile */
-      .subject-item {
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 10px;
-        border-left: 4px solid var(--primary);
-        transition: all 0.3s ease;
+      /* Tab Navigation */
+      .nav-tabs .nav-link {
+        border: none;
+        color: #6c757d;
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
       }
 
-      .subject-item:hover {
-        background: #e9ecef;
-        transform: translateX(5px);
-      }
-
-      .task-row {
-        background: white;
-        border-radius: 8px;
-        padding: 12px 15px;
-        margin-bottom: 8px;
-        border-left: 3px solid var(--secondary);
-        transition: all 0.3s ease;
-      }
-
-      .task-row:hover {
-        background: #f8f9fa;
-        transform: translateX(3px);
-      }
-
-      .semester-header {
-        cursor: pointer;
-        padding: 20px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-      }
-
-      .semester-header:hover {
-        background: rgba(52, 152, 219, 0.05);
-      }
-
-      /* PERBAIKAN: Tambahkan scroll untuk container subjects */
-      .subjects-container {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease;
-      }
-
-      .subjects-container.show {
-        max-height: 500px; /* Tinggi maksimum untuk container subjects */
-        overflow-y: auto; /* Tambahkan scroll vertikal */
-      }
-
-      /* PERBAIKAN: Tambahkan scroll untuk container tasks */
-      .tasks-container {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease;
-      }
-
-      .tasks-container.show {
-        max-height: 400px; /* Tinggi maksimum untuk container tasks */
-        overflow-y: auto; /* Tambahkan scroll vertikal */
-      }
-
-      .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background-color: var(--accent);
-        opacity: 0;
-        z-index: 9999;
-        animation: confetti-fall 5s ease-in-out forwards;
-      }
-
-      @keyframes confetti-fall {
-        0% {
-          transform: translateY(-100px) rotate(0deg);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(1000px) rotate(720deg);
-          opacity: 0;
-        }
-      }
-
-      .achievement-badge {
-        display: inline-block;
-        background: var(--warning);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-left: 10px;
-        animation: bounce 1s infinite alternate;
-      }
-
-      @keyframes bounce {
-        from {
-          transform: translateY(0);
-        }
-        to {
-          transform: translateY(-5px);
-        }
-      }
-
-      footer {
-        background: var(--dark);
-        color: white;
-        padding: 2rem 0;
-        margin-top: 3rem;
-      }
-
-      .task-progress {
-        height: 8px;
-        border-radius: 4px;
-        background: #e9ecef;
-        margin: 5px 0;
-        overflow: hidden;
-      }
-
-      .task-progress-bar {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        border-radius: 4px;
-        transition: width 0.5s ease;
-      }
-
-      .editable-title {
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 5px 10px;
-        border-radius: 5px;
-      }
-
-      .editable-title:hover {
-        background: rgba(52, 152, 219, 0.1);
-      }
-
-      .editable-input {
-        border: 2px solid var(--primary);
-        border-radius: 5px;
-        padding: 5px 10px;
-        font-weight: bold;
-        width: 100%;
-      }
-
-      .hierarchy-indent {
-        margin-left: 20px;
-      }
-
-      .hierarchy-indent-2 {
-        margin-left: 40px;
-      }
-
-      .priority-high {
-        border-left: 4px solid var(--danger) !important;
-      }
-
-      .priority-medium {
-        border-left: 4px solid var(--warning) !important;
-      }
-
-      .priority-low {
-        border-left: 4px solid var(--success) !important;
-      }
-
-      .task-link {
+      .nav-tabs .nav-link.active {
         color: var(--primary);
-        text-decoration: none;
-        font-size: 0.9rem;
-        margin-right: 10px;
+        border-bottom: 3px solid var(--primary);
+        background: transparent;
       }
 
-      .task-link:hover {
-        text-decoration: underline;
-      }
-
-      .edit-task-form {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        margin-top: 10px;
-      }
-
-      .priority-badge {
-        font-size: 0.7rem;
-        padding: 3px 8px;
-        border-radius: 10px;
-        margin-left: 8px;
-      }
-
-      .deadline-badge {
-        font-size: 0.7rem;
-        padding: 3px 8px;
-        border-radius: 10px;
-        background: var(--warning);
-        color: white;
-        margin-left: 8px;
-      }
-
-      .upcoming-deadlines {
-        max-height: 300px;
-        overflow-y: auto;
-      }
-
-      .deadline-item {
-        padding: 10px 15px;
-        border-bottom: 1px solid #e9ecef;
-        transition: all 0.3s ease;
-      }
-
-      .deadline-item:hover {
-        background: #f8f9fa;
-      }
-
-      .deadline-urgent {
-        color: var(--danger);
-        font-weight: 600;
-      }
-
-      .deadline-near {
-        color: var(--warning);
-        font-weight: 600;
-      }
-
-      .deadline-far {
-        color: var(--success);
-        font-weight: 600;
-      }
-
-      .deadline-completed {
-        color: var(--success);
-        font-weight: 600;
-      }
-
-      .semester-badge {
-        background: var(--primary);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-
-      .semester-1 {
-        background: var(--semester-1);
-      }
-      .semester-2 {
-        background: var(--semester-2);
-      }
-      .semester-3 {
-        background: var(--semester-3);
-      }
-      .semester-4 {
-        background: var(--semester-4);
-      }
-      .semester-5 {
-        background: var(--semester-5);
-      }
-      .semester-6 {
-        background: var(--semester-6);
-      }
-      .semester-7 {
-        background: var(--semester-7);
-      }
-      .semester-8 {
-        background: var(--semester-8);
-      }
-
-      /* PERBAIKAN: Styling untuk link AI */
+      /* AI Links */
       .ai-links {
-        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
       }
 
       .ai-link {
-        display: inline-block;
-        background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+        background: var(--primary);
         color: white;
-        padding: 3px 8px;
-        border-radius: 8px;
-        font-size: 0.7rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
         text-decoration: none;
-        margin-right: 5px;
-        margin-bottom: 3px;
-        transition: all 0.3s ease;
       }
 
       .ai-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 3px 8px rgba(108, 92, 231, 0.3);
         color: white;
-      }
-
-      .ai-link-chatgpt {
-        background: linear-gradient(135deg, #10a37f, #1a7f64);
-      }
-
-      .ai-link-deepseek {
-        background: linear-gradient(135deg, #4285f4, #3367d6);
-      }
-
-      .ai-link-other {
-        background: linear-gradient(135deg, #6c757d, #5a6268);
-      }
-
-      /* PERBAIKAN: Styling untuk form edit mata kuliah */
-      .edit-subject-form {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        margin-top: 10px;
-      }
-
-      /* Delete and Edit Buttons */
-      .delete-btn {
-        color: #e74c3c;
-        background: none;
-        border: none;
-        transition: all 0.3s ease;
-      }
-
-      .delete-btn:hover {
-        color: #c0392b;
-        transform: scale(1.2);
+        background: var(--secondary);
       }
 
       .edit-btn {
-        color: var(--primary);
-        background: none;
+        background: var(--warning);
         border: none;
-        transition: all 0.3s ease;
+        color: white;
       }
 
       .edit-btn:hover {
-        color: var(--secondary);
-        transform: scale(1.2);
+        background: #e67e22;
+        transform: translateY(-2px);
       }
 
-      /* Mobile-specific improvements */
       @media (max-width: 576px) {
         .container {
           padding-left: 15px;
           padding-right: 15px;
         }
-
         .hero-title {
           font-size: 1.75rem;
         }
-
         .hero-subtitle {
           font-size: 0.9rem;
         }
-
         .stats-number {
           font-size: 1.75rem;
         }
-
-        .deadline-amount {
-          font-size: 1.75rem;
-        }
-
         .section-title {
           font-size: 1.25rem;
         }
-
         .btn {
           width: 100%;
           margin-bottom: 0.5rem;
         }
-
         .btn-group .btn {
           width: auto;
           margin-bottom: 0;
         }
+      }
 
-        .d-flex.justify-content-between {
-          flex-direction: column;
+      .hierarchy-indicator {
+        margin-left: 1rem;
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-
-        .d-flex.justify-content-between > * {
-          margin-bottom: 0.75rem;
-        }
-
-        .d-flex.justify-content-between > *:last-child {
-          margin-bottom: 0;
-        }
-
-        .hierarchy-indent {
-          margin-left: 10px;
-        }
-
-        .hierarchy-indent-2 {
-          margin-left: 20px;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
     </style>
@@ -866,11 +609,11 @@
         <h2 class="section-title">Kalender & Deadline</h2>
         <div class="row g-3">
           <div class="col-12">
-            <div class="deadline-card">
+            <div class="calendar-card">
               <div class="row align-items-center">
                 <div class="col-12 col-md-6 mb-3 mb-md-0">
                   <h3 class="mb-2">Tugas Mendatang</h3>
-                  <div class="deadline-amount" id="upcomingTasks">0</div>
+                  <div class="calendar-amount" id="upcomingTasks">0</div>
                   <p class="mb-0">Tugas dengan deadline terdekat</p>
                 </div>
                 <div class="col-12 col-md-6 text-md-end">
@@ -886,7 +629,7 @@
             </div>
           </div>
           <div class="col-12">
-            <div class="calendar-summary">
+            <div class="summary-card">
               <h4 class="mb-3">Ringkasan Tugas</h4>
               <div class="d-flex justify-content-between mb-2">
                 <span>Total Tugas:</span>
@@ -920,40 +663,30 @@
     <!-- Main Content -->
     <section class="main-content" id="semesters">
       <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button
+        <ul class="nav nav-tabs mb-4" id="mainTabs">
+          <li class="nav-item">
+            <a
               class="nav-link active"
               id="semesters-tab"
               data-bs-toggle="tab"
-              data-bs-target="#semesters-content"
-              type="button"
-              role="tab"
+              href="#semesters-content"
+              >Semester</a
             >
-              <i class="fas fa-calendar-alt me-2"></i>Semester
-            </button>
           </li>
-          <li class="nav-item" role="presentation">
-            <button
+          <li class="nav-item">
+            <a
               class="nav-link"
               id="deadlines-tab"
               data-bs-toggle="tab"
-              data-bs-target="#deadlines-content"
-              type="button"
-              role="tab"
+              href="#deadlines-content"
+              >Deadline Mendatang</a
             >
-              <i class="fas fa-clock me-2"></i>Deadline Mendatang
-            </button>
           </li>
         </ul>
 
-        <div class="tab-content" id="myTabContent">
+        <div class="tab-content">
           <!-- Semesters Tab -->
-          <div
-            class="tab-pane fade show active"
-            id="semesters-content"
-            role="tabpanel"
-          >
+          <div class="tab-pane fade show active" id="semesters-content">
             <div class="d-flex justify-content-between align-items-center mb-4">
               <h2 class="section-title mb-0">Daftar Semester</h2>
               <div class="dropdown">
@@ -989,14 +722,6 @@
                       >Dalam Proses</a
                     >
                   </li>
-                  <li>
-                    <a
-                      class="dropdown-item filter-option"
-                      data-filter="pending"
-                      href="#"
-                      >Belum Dimulai</a
-                    >
-                  </li>
                 </ul>
               </div>
             </div>
@@ -1024,15 +749,13 @@
           </div>
 
           <!-- Deadlines Tab -->
-          <div class="tab-pane fade" id="deadlines-content" role="tabpanel">
+          <div class="tab-pane fade" id="deadlines-content">
             <h2 class="section-title">Deadline Tugas Mendatang</h2>
-
             <div class="card border-0 shadow-sm">
               <div class="card-body p-0">
                 <div class="upcoming-deadlines" id="upcomingDeadlines">
                   <!-- Deadline items will be dynamically added here -->
                 </div>
-
                 <div id="emptyDeadlineState" class="empty-state py-4">
                   <i class="fas fa-calendar-check"></i>
                   <h5>Belum Ada Deadline</h5>
@@ -1199,14 +922,13 @@
                   value="3"
                 />
               </div>
-              <!-- PERBAIKAN: Link AI sekarang hanya 2 input dengan 3 pilihan -->
               <div class="mb-3">
                 <label class="form-label">Link AI (Opsional)</label>
                 <div class="ai-links-inputs">
                   <div class="input-group mb-2">
-                    <span class="input-group-text">
-                      <i class="fas fa-robot"></i>
-                    </span>
+                    <span class="input-group-text"
+                      ><i class="fas fa-robot"></i
+                    ></span>
                     <select class="form-select" id="subjectAiType1">
                       <option value="">Pilih AI</option>
                       <option value="chatgpt">ChatGPT</option>
@@ -1221,9 +943,9 @@
                     />
                   </div>
                   <div class="input-group mb-2">
-                    <span class="input-group-text">
-                      <i class="fas fa-robot"></i>
-                    </span>
+                    <span class="input-group-text"
+                      ><i class="fas fa-robot"></i
+                    ></span>
                     <select class="form-select" id="subjectAiType2">
                       <option value="">Pilih AI</option>
                       <option value="chatgpt">ChatGPT</option>
@@ -1238,9 +960,6 @@
                     />
                   </div>
                 </div>
-                <small class="text-muted"
-                  >Tambahkan link AI yang membantu untuk mata kuliah ini</small
-                >
               </div>
               <div class="mb-3">
                 <label for="subjectDescription" class="form-label"
@@ -1327,18 +1046,6 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="taskEstimatedTime" class="form-label"
-                  >Perkiraan Waktu Pengerjaan (menit)</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  id="taskEstimatedTime"
-                  min="1"
-                  placeholder="Contoh: 120 untuk 2 jam"
-                />
-              </div>
-              <div class="mb-3">
                 <label for="taskDescription" class="form-label"
                   >Deskripsi (Opsional)</label
                 >
@@ -1394,7 +1101,6 @@
     <script>
       // Data storage
       let semesters = JSON.parse(localStorage.getItem("semesters")) || [];
-      let upcomingTasks = 0;
 
       // DOM Elements
       const semestersContainer = document.getElementById("semestersContainer");
@@ -1429,16 +1135,10 @@
 
       // Setup event listeners
       function setupEventListeners() {
-        // Save semester button
         saveSemesterBtn.addEventListener("click", addSemester);
-
-        // Save subject button
         saveSubjectBtn.addEventListener("click", addSubject);
-
-        // Save task button
         saveTaskBtn.addEventListener("click", addTask);
 
-        // Filter options
         document.querySelectorAll(".filter-option").forEach((option) => {
           option.addEventListener("click", function (e) {
             e.preventDefault();
@@ -1463,12 +1163,6 @@
           return;
         }
 
-        // Check if semester already exists
-        if (semesters.find((s) => s.number === number && s.year === year)) {
-          alert("Semester dengan nomor dan tahun yang sama sudah ada!");
-          return;
-        }
-
         const newSemester = {
           id: Date.now(),
           number,
@@ -1479,13 +1173,11 @@
         };
 
         semesters.push(newSemester);
-        // Sort semesters by number
         semesters.sort((a, b) => a.number - b.number);
         saveToLocalStorage();
         renderSemesters();
         updateStats();
 
-        // Show success message
         document.getElementById("successMessage").textContent =
           "Semester berhasil ditambahkan!";
         const successModal = new bootstrap.Modal(
@@ -1493,14 +1185,10 @@
         );
         successModal.show();
 
-        // Reset form
         addSemesterForm.reset();
-        const addSemesterModal = bootstrap.Modal.getInstance(
+        bootstrap.Modal.getInstance(
           document.getElementById("addSemesterModal")
-        );
-        addSemesterModal.hide();
-
-        // Add confetti animation
+        ).hide();
         createConfetti();
       }
 
@@ -1516,7 +1204,6 @@
           parseInt(document.getElementById("subjectCredits").value) || 0;
         const description = document.getElementById("subjectDescription").value;
 
-        // PERBAIKAN: Ambil data link AI (hanya 2 input sekarang)
         const aiLinks = [];
         for (let i = 1; i <= 2; i++) {
           const aiType = document.getElementById(`subjectAiType${i}`).value;
@@ -1541,7 +1228,7 @@
           lecturer,
           credits,
           description,
-          aiLinks, // PERBAIKAN: Simpan link AI
+          aiLinks,
           tasks: [],
         };
 
@@ -1550,7 +1237,6 @@
         renderSemesters();
         updateStats();
 
-        // Show success message
         document.getElementById("successMessage").textContent =
           "Mata kuliah berhasil ditambahkan!";
         const successModal = new bootstrap.Modal(
@@ -1558,12 +1244,10 @@
         );
         successModal.show();
 
-        // Reset form
         addSubjectForm.reset();
-        const addSubjectModal = bootstrap.Modal.getInstance(
+        bootstrap.Modal.getInstance(
           document.getElementById("addSubjectModal")
-        );
-        addSubjectModal.hide();
+        ).hide();
       }
 
       // Add a task to a subject
@@ -1578,8 +1262,6 @@
         const type = document.getElementById("taskType").value;
         const deadline = document.getElementById("taskDeadline").value;
         const priority = document.getElementById("taskPriority").value;
-        const estimatedTime =
-          parseInt(document.getElementById("taskEstimatedTime").value) || 0;
         const description = document.getElementById("taskDescription").value;
 
         if (!semesterId || !subjectId || !name || !deadline) {
@@ -1599,7 +1281,6 @@
           type,
           deadline,
           priority,
-          estimatedTime,
           description,
           completed: false,
           createdAt: new Date().toISOString(),
@@ -1612,7 +1293,6 @@
         updateCalendarDisplay();
         renderUpcomingDeadlines();
 
-        // Show success message
         document.getElementById("successMessage").textContent =
           "Tugas berhasil ditambahkan!";
         const successModal = new bootstrap.Modal(
@@ -1620,15 +1300,13 @@
         );
         successModal.show();
 
-        // Reset form
         addTaskForm.reset();
-        const addTaskModal = bootstrap.Modal.getInstance(
+        bootstrap.Modal.getInstance(
           document.getElementById("addTaskModal")
-        );
-        addTaskModal.hide();
+        ).hide();
       }
 
-      // Delete a semester
+      // Delete functions
       function deleteSemester(id) {
         if (
           confirm(
@@ -1642,7 +1320,6 @@
         }
       }
 
-      // Delete a subject
       function deleteSubject(semesterId, subjectId) {
         if (
           confirm(
@@ -1661,7 +1338,6 @@
         }
       }
 
-      // Delete a task
       function deleteTask(semesterId, subjectId, taskId) {
         if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
           const semester = semesters.find((s) => s.id === semesterId);
@@ -1681,35 +1357,30 @@
         }
       }
 
-      // Toggle subjects visibility
+      // Toggle functions
       function toggleSubjects(semesterId) {
-        const subjectsContainer = document.getElementById(
-          `subjects-${semesterId}`
+        const content = document.getElementById(
+          `semester-content-${semesterId}`
         );
-        const toggleIcon = document.getElementById(`toggle-icon-${semesterId}`);
-
-        if (subjectsContainer.classList.contains("show")) {
-          subjectsContainer.classList.remove("show");
-          toggleIcon.className = "fas fa-chevron-down";
+        const icon = document.getElementById(`semester-icon-${semesterId}`);
+        if (content.style.display === "none") {
+          content.style.display = "block";
+          icon.className = "fas fa-chevron-up";
         } else {
-          subjectsContainer.classList.add("show");
-          toggleIcon.className = "fas fa-chevron-up";
+          content.style.display = "none";
+          icon.className = "fas fa-chevron-down";
         }
       }
 
-      // Toggle tasks visibility
       function toggleTasks(subjectId) {
-        const tasksContainer = document.getElementById(`tasks-${subjectId}`);
-        const toggleIcon = document.getElementById(
-          `task-toggle-icon-${subjectId}`
-        );
-
-        if (tasksContainer.classList.contains("show")) {
-          tasksContainer.classList.remove("show");
-          toggleIcon.className = "fas fa-chevron-down";
+        const content = document.getElementById(`subject-content-${subjectId}`);
+        const icon = document.getElementById(`subject-icon-${subjectId}`);
+        if (content.style.display === "none") {
+          content.style.display = "block";
+          icon.className = "fas fa-chevron-up";
         } else {
-          tasksContainer.classList.add("show");
-          toggleIcon.className = "fas fa-chevron-up";
+          content.style.display = "none";
+          icon.className = "fas fa-chevron-down";
         }
       }
 
@@ -1731,7 +1402,6 @@
         updateCalendarDisplay();
         renderUpcomingDeadlines();
 
-        // Show success message
         if (task.completed) {
           document.getElementById(
             "successMessage"
@@ -1740,503 +1410,16 @@
             document.getElementById("successModal")
           );
           successModal.show();
-
-          // Add confetti animation
           createConfetti();
         }
       }
 
-      // Edit semester year
-      function editSemesterYear(semesterId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const titleElement = document.getElementById(
-          `semester-year-${semesterId}`
-        );
-        const currentYear = semester.year;
-
-        titleElement.innerHTML = `
-                <input type="text" class="editable-input" value="${currentYear}" id="edit-semester-${semesterId}">
-                <button class="btn btn-sm btn-success ms-2" onclick="saveSemesterYear(${semesterId})">
-                    <i class="fas fa-check"></i>
-                </button>
-                <button class="btn btn-sm btn-secondary ms-1" onclick="cancelEditSemesterYear(${semesterId}, '${currentYear}')">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-
-        document.getElementById(`edit-semester-${semesterId}`).focus();
-      }
-
-      // Save semester year
-      function saveSemesterYear(semesterId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const newYear = document.getElementById(
-          `edit-semester-${semesterId}`
-        ).value;
-        if (!newYear.trim()) {
-          alert("Tahun akademik tidak boleh kosong!");
-          return;
-        }
-
-        semester.year = newYear;
-        saveToLocalStorage();
-        renderSemesters();
-      }
-
-      // Cancel edit semester year
-      function cancelEditSemesterYear(semesterId, originalYear) {
-        const titleElement = document.getElementById(
-          `semester-year-${semesterId}`
-        );
-        titleElement.innerHTML = `
-                ${originalYear}
-                <button class="btn btn-sm edit-btn ms-2" onclick="editSemesterYear(${semesterId})">
-                    <i class="fas fa-edit"></i>
-                </button>
-            `;
-      }
-
-      // Edit subject name
-      function editSubjectName(semesterId, subjectId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const subject = semester.subjects.find((sub) => sub.id === subjectId);
-        if (!subject) return;
-
-        const titleElement = document.getElementById(
-          `subject-title-${subjectId}`
-        );
-        const currentName = subject.name;
-
-        titleElement.innerHTML = `
-                <input type="text" class="editable-input" value="${currentName}" id="edit-subject-${subjectId}">
-                <button class="btn btn-sm btn-success ms-2" onclick="saveSubjectName(${semesterId}, ${subjectId})">
-                    <i class="fas fa-check"></i>
-                </button>
-                <button class="btn btn-sm btn-secondary ms-1" onclick="cancelEditSubjectName(${semesterId}, ${subjectId}, '${currentName}')">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-
-        document.getElementById(`edit-subject-${subjectId}`).focus();
-      }
-
-      // Save subject name
-      function saveSubjectName(semesterId, subjectId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const subject = semester.subjects.find((sub) => sub.id === subjectId);
-        if (!subject) return;
-
-        const newName = document.getElementById(
-          `edit-subject-${subjectId}`
-        ).value;
-        if (!newName.trim()) {
-          alert("Nama mata kuliah tidak boleh kosong!");
-          return;
-        }
-
-        subject.name = newName;
-        saveToLocalStorage();
-        renderSemesters();
-      }
-
-      // Cancel edit subject name
-      function cancelEditSubjectName(semesterId, subjectId, originalName) {
-        const titleElement = document.getElementById(
-          `subject-title-${subjectId}`
-        );
-        titleElement.innerHTML = `
-                ${originalName}
-                <button class="btn btn-sm edit-btn ms-2" onclick="editSubjectName(${semesterId}, ${subjectId})">
-                    <i class="fas fa-edit"></i>
-                </button>
-            `;
-      }
-
-      // PERBAIKAN: Fungsi untuk edit mata kuliah secara lengkap
-      function editSubject(semesterId, subjectId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const subject = semester.subjects.find((sub) => sub.id === subjectId);
-        if (!subject) return;
-
-        const subjectElement = document.getElementById(`subject-${subjectId}`);
-
-        // Buat form edit
-        subjectElement.innerHTML = `
-          <div class="edit-subject-form">
-            <div class="mb-3">
-              <label class="form-label">Nama Mata Kuliah</label>
-              <input type="text" class="form-control" id="edit-subject-name-${subjectId}" value="${
-          subject.name
-        }" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Kode Mata Kuliah</label>
-              <input type="text" class="form-control" id="edit-subject-code-${subjectId}" value="${
-          subject.code || ""
-        }" placeholder="Contoh: TIF101, MKU002">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Nama Dosen</label>
-              <input type="text" class="form-control" id="edit-subject-lecturer-${subjectId}" value="${
-          subject.lecturer || ""
-        }" placeholder="Nama dosen pengampu">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Jumlah SKS</label>
-              <input type="number" class="form-control" id="edit-subject-credits-${subjectId}" value="${
-          subject.credits || 3
-        }" min="1" max="6">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Link AI</label>
-              <div class="ai-links-inputs">
-                <div class="input-group mb-2">
-                  <span class="input-group-text">
-                    <i class="fas fa-robot"></i>
-                  </span>
-                  <select class="form-select" id="edit-subject-ai-type-1-${subjectId}">
-                    <option value="">Pilih AI</option>
-                    <option value="chatgpt" ${
-                      subject.aiLinks &&
-                      subject.aiLinks[0] &&
-                      subject.aiLinks[0].type === "chatgpt"
-                        ? "selected"
-                        : ""
-                    }>ChatGPT</option>
-                    <option value="deepseek" ${
-                      subject.aiLinks &&
-                      subject.aiLinks[0] &&
-                      subject.aiLinks[0].type === "deepseek"
-                        ? "selected"
-                        : ""
-                    }>DeepSeek</option>
-                    <option value="other" ${
-                      subject.aiLinks &&
-                      subject.aiLinks[0] &&
-                      subject.aiLinks[0].type === "other"
-                        ? "selected"
-                        : ""
-                    }>Lainnya</option>
-                  </select>
-                  <input
-                    type="url"
-                    class="form-control"
-                    id="edit-subject-ai-link-1-${subjectId}"
-                    value="${
-                      subject.aiLinks && subject.aiLinks[0]
-                        ? subject.aiLinks[0].url
-                        : ""
-                    }"
-                    placeholder="https://chat.openai.com/..."
-                  >
-                </div>
-                <div class="input-group mb-2">
-                  <span class="input-group-text">
-                    <i class="fas fa-robot"></i>
-                  </span>
-                  <select class="form-select" id="edit-subject-ai-type-2-${subjectId}">
-                    <option value="">Pilih AI</option>
-                    <option value="chatgpt" ${
-                      subject.aiLinks &&
-                      subject.aiLinks[1] &&
-                      subject.aiLinks[1].type === "chatgpt"
-                        ? "selected"
-                        : ""
-                    }>ChatGPT</option>
-                    <option value="deepseek" ${
-                      subject.aiLinks &&
-                      subject.aiLinks[1] &&
-                      subject.aiLinks[1].type === "deepseek"
-                        ? "selected"
-                        : ""
-                    }>DeepSeek</option>
-                    <option value="other" ${
-                      subject.aiLinks &&
-                      subject.aiLinks[1] &&
-                      subject.aiLinks[1].type === "other"
-                        ? "selected"
-                        : ""
-                    }>Lainnya</option>
-                  </select>
-                  <input
-                    type="url"
-                    class="form-control"
-                    id="edit-subject-ai-link-2-${subjectId}"
-                    value="${
-                      subject.aiLinks && subject.aiLinks[1]
-                        ? subject.aiLinks[1].url
-                        : ""
-                    }"
-                    placeholder="https://chat.deepseek.com/..."
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Deskripsi</label>
-              <textarea class="form-control" id="edit-subject-description-${subjectId}" rows="3" placeholder="Deskripsi tentang mata kuliah ini...">${
-          subject.description || ""
-        }</textarea>
-            </div>
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-sm btn-success me-2" onclick="saveSubjectChanges(${semesterId}, ${subjectId})">
-                <i class="fas fa-check me-1"></i>Simpan
-              </button>
-              <button class="btn btn-sm btn-secondary" onclick="cancelEditSubject(${semesterId}, ${subjectId})">
-                <i class="fas fa-times me-1"></i>Batal
-              </button>
-            </div>
-          </div>
-        `;
-
-        document.getElementById(`edit-subject-name-${subjectId}`).focus();
-      }
-
-      // PERBAIKAN: Fungsi untuk menyimpan perubahan mata kuliah
-      function saveSubjectChanges(semesterId, subjectId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const subject = semester.subjects.find((sub) => sub.id === subjectId);
-        if (!subject) return;
-
-        const newName = document.getElementById(
-          `edit-subject-name-${subjectId}`
-        ).value;
-        const newCode = document.getElementById(
-          `edit-subject-code-${subjectId}`
-        ).value;
-        const newLecturer = document.getElementById(
-          `edit-subject-lecturer-${subjectId}`
-        ).value;
-        const newCredits =
-          parseInt(
-            document.getElementById(`edit-subject-credits-${subjectId}`).value
-          ) || 0;
-        const newDescription = document.getElementById(
-          `edit-subject-description-${subjectId}`
-        ).value;
-
-        // Ambil data link AI yang baru
-        const newAiLinks = [];
-        for (let i = 1; i <= 2; i++) {
-          const aiType = document.getElementById(
-            `edit-subject-ai-type-${i}-${subjectId}`
-          ).value;
-          const aiLink = document.getElementById(
-            `edit-subject-ai-link-${i}-${subjectId}`
-          ).value;
-          if (aiType && aiLink) {
-            newAiLinks.push({ type: aiType, url: aiLink });
-          }
-        }
-
-        if (!newName.trim()) {
-          alert("Nama mata kuliah tidak boleh kosong!");
-          return;
-        }
-
-        subject.name = newName;
-        subject.code = newCode;
-        subject.lecturer = newLecturer;
-        subject.credits = newCredits;
-        subject.description = newDescription;
-        subject.aiLinks = newAiLinks;
-
-        saveToLocalStorage();
-        renderSemesters();
-
-        // Show success message
-        document.getElementById("successMessage").textContent =
-          "Mata kuliah berhasil diupdate!";
-        const successModal = new bootstrap.Modal(
-          document.getElementById("successModal")
-        );
-        successModal.show();
-      }
-
-      // PERBAIKAN: Fungsi untuk membatalkan edit mata kuliah
-      function cancelEditSubject(semesterId, subjectId) {
-        renderSemesters();
-      }
-
-      // Edit task
-      function editTask(semesterId, subjectId, taskId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const subject = semester.subjects.find((sub) => sub.id === subjectId);
-        if (!subject) return;
-
-        const task = subject.tasks.find((t) => t.id === taskId);
-        if (!task) return;
-
-        const taskElement = document.getElementById(`task-${taskId}`);
-
-        taskElement.innerHTML = `
-          <div class="edit-task-form">
-            <div class="mb-3">
-              <label class="form-label">Nama Tugas</label>
-              <input type="text" class="form-control" id="edit-task-name-${taskId}" value="${
-          task.name
-        }" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Jenis Tugas</label>
-              <select class="form-select" id="edit-task-type-${taskId}">
-                <option value="tugas" ${
-                  task.type === "tugas" ? "selected" : ""
-                }>Tugas</option>
-                <option value="quiz" ${
-                  task.type === "quiz" ? "selected" : ""
-                }>Quiz</option>
-                <option value="uts" ${
-                  task.type === "uts" ? "selected" : ""
-                }>UTS</option>
-                <option value="uas" ${
-                  task.type === "uas" ? "selected" : ""
-                }>UAS</option>
-                <option value="projek" ${
-                  task.type === "projek" ? "selected" : ""
-                }>Projek</option>
-                <option value="presentasi" ${
-                  task.type === "presentasi" ? "selected" : ""
-                }>Presentasi</option>
-                <option value="laporan" ${
-                  task.type === "laporan" ? "selected" : ""
-                }>Laporan</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Deadline</label>
-              <input type="date" class="form-control" id="edit-task-deadline-${taskId}" value="${
-          task.deadline
-        }" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Prioritas</label>
-              <select class="form-select" id="edit-task-priority-${taskId}">
-                <option value="low" ${
-                  task.priority === "low" ? "selected" : ""
-                }>Rendah</option>
-                <option value="medium" ${
-                  task.priority === "medium" ? "selected" : ""
-                }>Sedang</option>
-                <option value="high" ${
-                  task.priority === "high" ? "selected" : ""
-                }>Tinggi</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Perkiraan Waktu Pengerjaan (menit)</label>
-              <input type="number" class="form-control" id="edit-task-estimated-time-${taskId}" value="${
-          task.estimatedTime || 0
-        }" min="1">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Deskripsi</label>
-              <textarea class="form-control" id="edit-task-description-${taskId}" rows="2">${
-          task.description || ""
-        }</textarea>
-            </div>
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-sm btn-success me-2" onclick="saveTaskChanges(${semesterId}, ${subjectId}, ${taskId})">
-                <i class="fas fa-check me-1"></i>Simpan
-              </button>
-              <button class="btn btn-sm btn-secondary" onclick="cancelEditTask(${semesterId}, ${subjectId}, ${taskId})">
-                <i class="fas fa-times me-1"></i>Batal
-              </button>
-            </div>
-          </div>
-        `;
-
-        document.getElementById(`edit-task-name-${taskId}`).focus();
-      }
-
-      // Save task changes
-      function saveTaskChanges(semesterId, subjectId, taskId) {
-        const semester = semesters.find((s) => s.id === semesterId);
-        if (!semester) return;
-
-        const subject = semester.subjects.find((sub) => sub.id === subjectId);
-        if (!subject) return;
-
-        const task = subject.tasks.find((t) => t.id === taskId);
-        if (!task) return;
-
-        const newName = document.getElementById(
-          `edit-task-name-${taskId}`
-        ).value;
-        const newType = document.getElementById(
-          `edit-task-type-${taskId}`
-        ).value;
-        const newDeadline = document.getElementById(
-          `edit-task-deadline-${taskId}`
-        ).value;
-        const newPriority = document.getElementById(
-          `edit-task-priority-${taskId}`
-        ).value;
-        const newEstimatedTime =
-          parseInt(
-            document.getElementById(`edit-task-estimated-time-${taskId}`).value
-          ) || 0;
-        const newDescription = document.getElementById(
-          `edit-task-description-${taskId}`
-        ).value;
-
-        if (!newName.trim()) {
-          alert("Nama tugas tidak boleh kosong!");
-          return;
-        }
-
-        if (!newDeadline) {
-          alert("Deadline harus diisi!");
-          return;
-        }
-
-        task.name = newName;
-        task.type = newType;
-        task.deadline = newDeadline;
-        task.priority = newPriority;
-        task.estimatedTime = newEstimatedTime;
-        task.description = newDescription;
-
-        saveToLocalStorage();
-        renderSemesters();
-        updateCalendarDisplay();
-        renderUpcomingDeadlines();
-
-        // Show success message
-        document.getElementById("successMessage").textContent =
-          "Tugas berhasil diupdate!";
-        const successModal = new bootstrap.Modal(
-          document.getElementById("successModal")
-        );
-        successModal.show();
-      }
-
-      // Cancel edit task
-      function cancelEditTask(semesterId, subjectId, taskId) {
-        renderSemesters();
-      }
-
-      // Render semesters
+      // Render semesters dengan tampilan seperti Wishlist
       function renderSemesters(filter = "all") {
         let filteredSemesters = semesters;
 
         if (filter === "completed") {
           filteredSemesters = semesters.filter((s) => {
-            // A semester is completed if all tasks in all subjects are completed
             return (
               s.subjects.length > 0 &&
               s.subjects.every(
@@ -2247,7 +1430,6 @@
           });
         } else if (filter === "in-progress") {
           filteredSemesters = semesters.filter((s) => {
-            // A semester is in progress if it has at least one task that's completed and one that's not
             const hasCompleted = s.subjects.some((sub) =>
               sub.tasks.some((t) => t.completed)
             );
@@ -2255,13 +1437,6 @@
               sub.tasks.some((t) => !t.completed)
             );
             return hasCompleted && hasPending;
-          });
-        } else if (filter === "pending") {
-          filteredSemesters = semesters.filter((s) => {
-            // A semester is pending if all tasks are not completed
-            return s.subjects.some((sub) =>
-              sub.tasks.some((t) => !t.completed)
-            );
           });
         }
 
@@ -2271,22 +1446,16 @@
         } else {
           semestersContainer.style.display = "block";
           emptyState.style.display = "none";
-
           semestersContainer.innerHTML = "";
 
           filteredSemesters.forEach((semester, index) => {
-            // Calculate totals for this semester
             let totalSubjects = semester.subjects.length;
             let totalTasks = 0;
             let completedTasks = 0;
-            let totalCredits = 0;
-            let totalEstimatedTime = 0;
 
             semester.subjects.forEach((subject) => {
-              totalCredits += subject.credits || 0;
+              totalTasks += subject.tasks.length;
               subject.tasks.forEach((task) => {
-                totalTasks++;
-                totalEstimatedTime += task.estimatedTime || 0;
                 if (task.completed) completedTasks++;
               });
             });
@@ -2296,551 +1465,339 @@
             const isCompleted = totalTasks > 0 && completedTasks === totalTasks;
 
             const semesterCard = document.createElement("div");
-            semesterCard.className = `semester-card fade-in`;
+            semesterCard.className = "semester-card fade-in";
             semesterCard.style.animationDelay = `${index * 0.1}s`;
 
             semesterCard.innerHTML = `
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <div class="semester-header d-flex justify-content-between align-items-center p-4" onclick="toggleSubjects(${
+                        <div class="semester-header" onclick="toggleSubjects(${
+                          semester.id
+                        })">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h4 class="semester-title">Semester ${
+                                      semester.number
+                                    }</h4>
+                                    <p class="semester-meta">
+                                        ${
+                                          semester.subjects.length
+                                        } mata kuliah, ${totalTasks} tugas
+                                        <span class="hierarchy-indicator">
+                                            ${completedTasks}/${totalTasks} selesai
+                                        </span>
+                                    </p>
+                                </div>
+                                <i id="semester-icon-${
+                                  semester.id
+                                }" class="fas fa-chevron-down"></i>
+                            </div>
+                            ${
+                              totalTasks > 0
+                                ? `
+                                <div class="progress-info">
+                                    <span class="progress-text">Progress: ${Math.round(
+                                      progressPercentage
+                                    )}%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: ${progressPercentage}%"></div>
+                                </div>
+                            `
+                                : ""
+                            }
+                        </div>
+                        <div class="semester-content" id="semester-content-${
+                          semester.id
+                        }" style="display: none;">
+                            ${
+                              semester.description
+                                ? `<p class="mb-3">${semester.description}</p>`
+                                : ""
+                            }
+                            
+                            <div class="d-flex justify-content-end mb-3">
+                                <button class="btn btn-sm btn-outline-primary me-2" onclick="openAddSubjectModal(${
                                   semester.id
                                 })">
-                                    <div class="d-flex align-items-center">
-                                        <div class="me-3">
-                                            <span class="semester-badge semester-${
-                                              semester.number
-                                            }">S${semester.number}</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="mb-1">
-                                                Semester ${semester.number}
-                                                <button class="btn btn-sm edit-btn ms-2" onclick="event.stopPropagation(); editSemesterYear(${
-                                                  semester.id
-                                                })">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </h4>
-                                            <p class="mb-0">
-                                                <span id="semester-year-${
-                                                  semester.id
-                                                }" class="editable-title">
-                                                    ${semester.year}
-                                                </span>
-                                                ${
-                                                  totalCredits > 0
-                                                    ? ` • ${totalCredits} SKS`
-                                                    : ""
-                                                }
-                                                ${
-                                                  isCompleted
-                                                    ? '<span class="achievement-badge"><i class="fas fa-trophy me-1"></i>Selesai!</span>'
-                                                    : ""
-                                                }
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="me-3 fw-bold">${completedTasks}/${totalTasks}</span>
-                                        <i id="toggle-icon-${
-                                          semester.id
-                                        }" class="fas fa-chevron-down"></i>
-                                    </div>
-                                </div>
-                                
-                                <div class="subjects-container" id="subjects-${
+                                    <i class="fas fa-plus me-1"></i>Tambah Mata Kuliah
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteSemester(${
                                   semester.id
-                                }">
-                                    <div class="p-4 pt-0">
-                                        ${
-                                          semester.description
-                                            ? `<p class="mb-3">${semester.description}</p>`
-                                            : ""
-                                        }
-                                        
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="flex-grow-1 me-3">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <small class="text-muted">Progress: ${completedTasks} dari ${totalTasks} tugas</small>
-                                                    <small class="text-muted">${progressPercentage.toFixed(
-                                                      1
-                                                    )}%</small>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar ${
-                                                      isCompleted
-                                                        ? "bg-success"
-                                                        : "bg-primary"
-                                                    }" role="progressbar" style="width: ${progressPercentage}%"></div>
+                                })">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="subjects-list">
+                                ${
+                                  semester.subjects.length > 0
+                                    ? semester.subjects
+                                        .map((subject) => {
+                                          let subjectTotalTasks = 0;
+                                          let subjectCompletedTasks = 0;
+
+                                          subject.tasks.forEach((task) => {
+                                            subjectTotalTasks++;
+                                            if (task.completed)
+                                              subjectCompletedTasks++;
+                                          });
+
+                                          const subjectProgress =
+                                            subjectTotalTasks > 0
+                                              ? (subjectCompletedTasks /
+                                                  subjectTotalTasks) *
+                                                100
+                                              : 0;
+                                          const subjectCompleted =
+                                            subjectTotalTasks > 0 &&
+                                            subjectCompletedTasks ===
+                                              subjectTotalTasks;
+
+                                          const aiLinksHTML =
+                                            subject.aiLinks &&
+                                            subject.aiLinks.length > 0
+                                              ? `
+                                        <div class="ai-links">
+                                            ${subject.aiLinks
+                                              .map(
+                                                (ai) => `
+                                                <a href="${
+                                                  ai.url
+                                                }" target="_blank" class="ai-link">
+                                                    <i class="fas fa-robot me-1"></i>${
+                                                      ai.type === "chatgpt"
+                                                        ? "ChatGPT"
+                                                        : ai.type === "deepseek"
+                                                        ? "DeepSeek"
+                                                        : "AI"
+                                                    }
+                                                </a>
+                                            `
+                                              )
+                                              .join("")}
+                                        </div>
+                                    `
+                                              : "";
+
+                                          return `
+                                        <div class="subject-card">
+                                            <div class="subject-header" onclick="toggleTasks(${
+                                              subject.id
+                                            })">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h5 class="subject-title">${
+                                                          subject.name
+                                                        }</h5>
+                                                        <p class="subject-meta">
+                                                            ${
+                                                              subject.tasks
+                                                                .length
+                                                            } tugas
+                                                            <span class="hierarchy-indicator">
+                                                                ${subjectCompletedTasks}/${subjectTotalTasks} selesai
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <i id="subject-icon-${
+                                                      subject.id
+                                                    }" class="fas fa-chevron-down"></i>
                                                 </div>
                                                 ${
-                                                  totalEstimatedTime > 0
-                                                    ? `<small class="text-muted">Perkiraan total waktu: ${Math.ceil(
-                                                        totalEstimatedTime / 60
-                                                      )} jam ${
-                                                        totalEstimatedTime % 60
-                                                      } menit</small>`
+                                                  subjectTotalTasks > 0
+                                                    ? `
+                                                    <div class="progress-info">
+                                                        <span class="progress-text">Progress: ${Math.round(
+                                                          subjectProgress
+                                                        )}%</span>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-info" role="progressbar" style="width: ${subjectProgress}%"></div>
+                                                    </div>
+                                                `
                                                     : ""
                                                 }
                                             </div>
-                                            <div>
-                                                <button class="btn btn-sm btn-outline-primary me-2" onclick="openAddSubjectModal(${
-                                                  semester.id
-                                                })">
-                                                    <i class="fas fa-plus me-1"></i>Mata Kuliah
-                                                </button>
-                                                <button class="btn btn-sm delete-btn" onclick="deleteSemester(${
-                                                  semester.id
-                                                })">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="subjects-list mt-3">
-                                            ${
-                                              semester.subjects.length > 0
-                                                ? semester.subjects
-                                                    .map((subject) => {
-                                                      // Calculate totals for this subject
-                                                      let subjectTotalTasks = 0;
-                                                      let subjectCompletedTasks = 0;
-                                                      let subjectEstimatedTime = 0;
+                                            <div class="subject-content" id="subject-content-${
+                                              subject.id
+                                            }" style="display: none;">
+                                                ${
+                                                  subject.description
+                                                    ? `<p class="mb-2">${subject.description}</p>`
+                                                    : ""
+                                                }
+                                                ${aiLinksHTML}
+                                                
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div></div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-outline-primary me-2" onclick="openAddTaskModal(${
+                                                          semester.id
+                                                        }, ${subject.id})">
+                                                            <i class="fas fa-plus me-1"></i>Tambah Tugas
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteSubject(${
+                                                          semester.id
+                                                        }, ${subject.id})">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="tasks-list">
+                                                    ${
+                                                      subject.tasks.length > 0
+                                                        ? subject.tasks
+                                                            .map((task) => {
+                                                              const daysUntilDeadline =
+                                                                Math.ceil(
+                                                                  (new Date(
+                                                                    task.deadline
+                                                                  ) -
+                                                                    new Date()) /
+                                                                    (1000 *
+                                                                      60 *
+                                                                      60 *
+                                                                      24)
+                                                                );
+                                                              let deadlineClass =
+                                                                "deadline-far";
+                                                              let deadlineText = `${daysUntilDeadline} hari lagi`;
 
-                                                      subject.tasks.forEach(
-                                                        (task) => {
-                                                          subjectTotalTasks++;
-                                                          subjectEstimatedTime +=
-                                                            task.estimatedTime ||
-                                                            0;
-                                                          if (task.completed)
-                                                            subjectCompletedTasks++;
-                                                        }
-                                                      );
+                                                              if (
+                                                                daysUntilDeadline <
+                                                                0
+                                                              ) {
+                                                                deadlineClass =
+                                                                  "deadline-urgent";
+                                                                deadlineText =
+                                                                  "Terlambat!";
+                                                              } else if (
+                                                                daysUntilDeadline <=
+                                                                1
+                                                              ) {
+                                                                deadlineClass =
+                                                                  "deadline-urgent";
+                                                                deadlineText =
+                                                                  "Besok!";
+                                                              } else if (
+                                                                daysUntilDeadline <=
+                                                                3
+                                                              ) {
+                                                                deadlineClass =
+                                                                  "deadline-near";
+                                                                deadlineText = `${daysUntilDeadline} hari lagi`;
+                                                              }
 
-                                                      const subjectProgress =
-                                                        subjectTotalTasks > 0
-                                                          ? (subjectCompletedTasks /
-                                                              subjectTotalTasks) *
-                                                            100
-                                                          : 0;
-                                                      const subjectCompleted =
-                                                        subjectTotalTasks > 0 &&
-                                                        subjectCompletedTasks ===
-                                                          subjectTotalTasks;
-
-                                                      // PERBAIKAN: Render link AI untuk mata kuliah
-                                                      const aiLinksHTML =
-                                                        subject.aiLinks &&
-                                                        subject.aiLinks.length >
-                                                          0
-                                                          ? `
-                                                          <div class="ai-links mt-2">
-                                                            ${subject.aiLinks
-                                                              .map(
-                                                                (ai) => `
-                                                              <a href="${
-                                                                ai.url
-                                                              }" target="_blank" class="ai-link ai-link-${
-                                                                  ai.type
-                                                                }">
-                                                                <i class="fas fa-robot me-1"></i>${
-                                                                  ai.type ===
-                                                                  "chatgpt"
-                                                                    ? "ChatGPT"
-                                                                    : ai.type ===
-                                                                      "deepseek"
-                                                                    ? "DeepSeek"
-                                                                    : "AI"
-                                                                }
-                                                              </a>
-                                                            `
-                                                              )
-                                                              .join("")}
-                                                          </div>
-                                                        `
-                                                          : "";
-
-                                                      return `
-                                                        <div class="subject-item hierarchy-indent" id="subject-${
-                                                          subject.id
-                                                        }">
-                                                            <div class="d-flex justify-content-between align-items-center mb-2" onclick="toggleTasks(${
-                                                              subject.id
-                                                            })">
-                                                                <div class="flex-grow-1">
-                                                                    <h5 class="mb-1">
-                                                                        <span id="subject-title-${
-                                                                          subject.id
-                                                                        }" class="editable-title">
+                                                              if (
+                                                                task.completed
+                                                              ) {
+                                                                return `
+                                                                <div class="task-item">
+                                                                    <div class="task-content">
+                                                                        <div class="task-info">
+                                                                            <div class="task-name">
+                                                                                ${
+                                                                                  task.name
+                                                                                }
+                                                                                <span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span>
+                                                                            </div>
+                                                                            <div class="task-deadline">${
+                                                                              task.type
+                                                                            } • Deadline: ${new Date(
+                                                                  task.deadline
+                                                                ).toLocaleDateString(
+                                                                  "id-ID"
+                                                                )}</div>
                                                                             ${
-                                                                              subject.name
+                                                                              task.description
+                                                                                ? `<div class="mt-1"><small>${task.description}</small></div>`
+                                                                                : ""
                                                                             }
-                                                                            <button class="btn btn-sm edit-btn ms-2" onclick="event.stopPropagation(); editSubject(${
+                                                                        </div>
+                                                                        <div class="task-actions">
+                                                                            <button class="btn btn-sm btn-warning" onclick="markTaskCompleted(${
                                                                               semester.id
                                                                             }, ${
-                                                        subject.id
-                                                      })">
-                                                                                <i class="fas fa-edit"></i>
+                                                                  subject.id
+                                                                }, ${task.id})">
+                                                                                <i class="fas fa-undo"></i>
                                                                             </button>
-                                                                        </span>
-                                                                        ${
-                                                                          subjectCompleted
-                                                                            ? '<span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span>'
-                                                                            : ""
-                                                                        }
-                                                                    </h5>
-                                                                    <div class="d-flex flex-wrap gap-2">
-                                                                      ${
-                                                                        subject.code
-                                                                          ? `<small class="text-muted">${subject.code}</small>`
-                                                                          : ""
-                                                                      }
-                                                                      ${
-                                                                        subject.lecturer
-                                                                          ? `<small class="text-muted">Dosen: ${subject.lecturer}</small>`
-                                                                          : ""
-                                                                      }
-                                                                      ${
-                                                                        subject.credits
-                                                                          ? `<small class="text-muted">${subject.credits} SKS</small>`
-                                                                          : ""
-                                                                      }
+                                                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${
+                                                                              semester.id
+                                                                            }, ${
+                                                                  subject.id
+                                                                }, ${task.id})">
+                                                                                <i class="fas fa-times"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
-                                                                    <!-- PERBAIKAN: Tampilkan link AI di sini -->
-                                                                    ${aiLinksHTML}
-                                                                    ${
-                                                                      subject.description
-                                                                        ? `<small class="text-muted">${subject.description}</small>`
-                                                                        : ""
-                                                                    }
                                                                 </div>
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="me-3 text-muted">${
-                                                                      subject
-                                                                        .tasks
-                                                                        .length
-                                                                    } tugas</span>
-                                                                    <i id="task-toggle-icon-${
-                                                                      subject.id
-                                                                    }" class="fas fa-chevron-down"></i>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                                                <div class="flex-grow-1 me-3">
-                                                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                                                        <small class="text-muted">Progress: ${subjectCompletedTasks} dari ${subjectTotalTasks} tugas</small>
-                                                                        <small class="text-muted">${subjectProgress.toFixed(
-                                                                          1
-                                                                        )}%</small>
-                                                                    </div>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar ${
-                                                                          subjectCompleted
-                                                                            ? "bg-success"
-                                                                            : "bg-info"
-                                                                        }" role="progressbar" style="width: ${subjectProgress}%"></div>
-                                                                    </div>
-                                                                    ${
-                                                                      subjectEstimatedTime >
-                                                                      0
-                                                                        ? `<small class="text-muted">Perkiraan waktu: ${Math.ceil(
-                                                                            subjectEstimatedTime /
-                                                                              60
-                                                                          )} jam ${
-                                                                            subjectEstimatedTime %
-                                                                            60
-                                                                          } menit</small>`
-                                                                        : ""
-                                                                    }
-                                                                </div>
-                                                                <div>
-                                                                    <button class="btn btn-sm btn-outline-primary me-2" onclick="openAddTaskModal(${
-                                                                      semester.id
-                                                                    }, ${
-                                                        subject.id
-                                                      })">
-                                                                        <i class="fas fa-plus me-1"></i>Tugas
-                                                                    </button>
-                                                                    <button class="btn btn-sm delete-btn" onclick="deleteSubject(${
-                                                                      semester.id
-                                                                    }, ${
-                                                        subject.id
-                                                      })">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="tasks-container" id="tasks-${
-                                                              subject.id
-                                                            }">
-                                                                <div class="tasks-list mt-3">
-                                                                    ${
-                                                                      subject
-                                                                        .tasks
-                                                                        .length >
-                                                                      0
-                                                                        ? subject.tasks
-                                                                            .map(
-                                                                              (
-                                                                                task
-                                                                              ) => {
-                                                                                // PERBAIKAN: Tugas yang sudah selesai harus menampilkan "Selesai"
-                                                                                if (
-                                                                                  task.completed
-                                                                                ) {
-                                                                                  return `
-                                                                                  <div class="task-row hierarchy-indent-2 priority-low" id="task-${
-                                                                                    task.id
-                                                                                  }">
-                                                                                      <div class="d-flex align-items-center">
-                                                                                          <div class="flex-grow-1">
-                                                                                              <div class="d-flex justify-content-between align-items-center">
-                                                                                                  <h6 class="mb-1">${
-                                                                                                    task.name
-                                                                                                  } <span class="badge bg-success ms-2"><i class="fas fa-check me-1"></i>Selesai</span></h6>
-                                                                                                  <div>
-                                                                                                      <button class="btn btn-sm edit-btn me-2" onclick="editTask(${
-                                                                                                        semester.id
-                                                                                                      }, ${
-                                                                                    subject.id
-                                                                                  }, ${
-                                                                                    task.id
-                                                                                  })">
-                                                                                                          <i class="fas fa-edit"></i>
-                                                                                                      </button>
-                                                                                                      <button class="btn btn-sm btn-warning me-2" onclick="markTaskCompleted(${
-                                                                                                        semester.id
-                                                                                                      }, ${
-                                                                                    subject.id
-                                                                                  }, ${
-                                                                                    task.id
-                                                                                  })">
-                                                                                                          <i class="fas fa-undo"></i>
-                                                                                                      </button>
-                                                                                                      <button class="btn btn-sm delete-btn" onclick="deleteTask(${
-                                                                                                        semester.id
-                                                                                                      }, ${
-                                                                                    subject.id
-                                                                                  }, ${
-                                                                                    task.id
-                                                                                  })">
-                                                                                                          <i class="fas fa-times"></i>
-                                                                                                      </button>
-                                                                                                  </div>
-                                                                                              </div>
-                                                                                              <div class="d-flex justify-content-between align-items-center mb-1">
-                                                                                                  <small class="text-muted">${
-                                                                                                    task.type
-                                                                                                  } • Deadline: ${new Date(
-                                                                                    task.deadline
-                                                                                  ).toLocaleDateString(
-                                                                                    "id-ID"
-                                                                                  )}</small>
-                                                                                                  <small class="deadline-completed">Selesai</small>
-                                                                                              </div>
-                                                                                              ${
-                                                                                                task.estimatedTime >
-                                                                                                0
-                                                                                                  ? `<div class="mb-1"><small class="text-muted">Perkiraan waktu: ${Math.ceil(
-                                                                                                      task.estimatedTime /
-                                                                                                        60
-                                                                                                    )} jam ${
-                                                                                                      task.estimatedTime %
-                                                                                                      60
-                                                                                                    } menit</small></div>`
-                                                                                                  : ""
-                                                                                              }
-                                                                                              ${
-                                                                                                task.description
-                                                                                                  ? `<div class="mt-1"><small class="text-muted">${task.description}</small></div>`
-                                                                                                  : ""
-                                                                                              }
-                                                                                          </div>
-                                                                                      </div>
-                                                                                  </div>
-                                                                                `;
-                                                                                } else {
-                                                                                  // Tugas yang belum selesai menampilkan status deadline
-                                                                                  const daysUntilDeadline =
-                                                                                    Math.ceil(
-                                                                                      (new Date(
-                                                                                        task.deadline
-                                                                                      ) -
-                                                                                        new Date()) /
-                                                                                        (1000 *
-                                                                                          60 *
-                                                                                          60 *
-                                                                                          24)
-                                                                                    );
-                                                                                  let deadlineClass =
-                                                                                    "deadline-far";
-                                                                                  let deadlineText = `${daysUntilDeadline} hari lagi`;
-
-                                                                                  if (
-                                                                                    daysUntilDeadline <
-                                                                                    0
-                                                                                  ) {
-                                                                                    deadlineClass =
-                                                                                      "deadline-urgent";
-                                                                                    deadlineText =
-                                                                                      "Terlambat!";
-                                                                                  } else if (
-                                                                                    daysUntilDeadline <=
-                                                                                    1
-                                                                                  ) {
-                                                                                    deadlineClass =
-                                                                                      "deadline-urgent";
-                                                                                    deadlineText =
-                                                                                      "Besok!";
-                                                                                  } else if (
-                                                                                    daysUntilDeadline <=
-                                                                                    3
-                                                                                  ) {
-                                                                                    deadlineClass =
-                                                                                      "deadline-near";
-                                                                                    deadlineText = `${daysUntilDeadline} hari lagi`;
-                                                                                  }
-
-                                                                                  let priorityClass =
-                                                                                    "";
-                                                                                  let priorityText =
-                                                                                    "";
-                                                                                  let priorityBadge =
-                                                                                    "";
-
-                                                                                  if (
-                                                                                    task.priority ===
-                                                                                    "high"
-                                                                                  ) {
-                                                                                    priorityClass =
-                                                                                      "priority-high";
-                                                                                    priorityText =
-                                                                                      "Tinggi";
-                                                                                    priorityBadge =
-                                                                                      '<span class="badge bg-danger priority-badge">Tinggi</span>';
-                                                                                  } else if (
-                                                                                    task.priority ===
-                                                                                    "medium"
-                                                                                  ) {
-                                                                                    priorityClass =
-                                                                                      "priority-medium";
-                                                                                    priorityText =
-                                                                                      "Sedang";
-                                                                                    priorityBadge =
-                                                                                      '<span class="badge bg-warning priority-badge">Sedang</span>';
-                                                                                  } else {
-                                                                                    priorityClass =
-                                                                                      "priority-low";
-                                                                                    priorityText =
-                                                                                      "Rendah";
-                                                                                    priorityBadge =
-                                                                                      '<span class="badge bg-success priority-badge">Rendah</span>';
-                                                                                  }
-
-                                                                                  return `
-                                                                                  <div class="task-row hierarchy-indent-2 ${priorityClass}" id="task-${
-                                                                                    task.id
-                                                                                  }">
-                                                                                      <div class="d-flex align-items-center">
-                                                                                          <div class="flex-grow-1">
-                                                                                              <div class="d-flex justify-content-between align-items-center">
-                                                                                                  <h6 class="mb-1">${
-                                                                                                    task.name
-                                                                                                  } ${priorityBadge}</h6>
-                                                                                                  <div>
-                                                                                                      <button class="btn btn-sm edit-btn me-2" onclick="editTask(${
-                                                                                                        semester.id
-                                                                                                      }, ${
-                                                                                    subject.id
-                                                                                  }, ${
-                                                                                    task.id
-                                                                                  })">
-                                                                                                          <i class="fas fa-edit"></i>
-                                                                                                      </button>
-                                                                                                      <button class="btn btn-sm btn-success me-2" onclick="markTaskCompleted(${
-                                                                                                        semester.id
-                                                                                                      }, ${
-                                                                                    subject.id
-                                                                                  }, ${
-                                                                                    task.id
-                                                                                  })">
-                                                                                                          <i class="fas fa-check"></i>
-                                                                                                      </button>
-                                                                                                      <button class="btn btn-sm delete-btn" onclick="deleteTask(${
-                                                                                                        semester.id
-                                                                                                      }, ${
-                                                                                    subject.id
-                                                                                  }, ${
-                                                                                    task.id
-                                                                                  })">
-                                                                                                          <i class="fas fa-times"></i>
-                                                                                                      </button>
-                                                                                                  </div>
-                                                                                              </div>
-                                                                                              <div class="d-flex justify-content-between align-items-center mb-1">
-                                                                                                  <small class="text-muted">${
-                                                                                                    task.type
-                                                                                                  } • Deadline: ${new Date(
-                                                                                    task.deadline
-                                                                                  ).toLocaleDateString(
-                                                                                    "id-ID"
-                                                                                  )}</small>
-                                                                                                  <small class="${deadlineClass}">${deadlineText}</small>
-                                                                                              </div>
-                                                                                              ${
-                                                                                                task.estimatedTime >
-                                                                                                0
-                                                                                                  ? `<div class="mb-1"><small class="text-muted">Perkiraan waktu: ${Math.ceil(
-                                                                                                      task.estimatedTime /
-                                                                                                        60
-                                                                                                    )} jam ${
-                                                                                                      task.estimatedTime %
-                                                                                                      60
-                                                                                                    } menit</small></div>`
-                                                                                                  : ""
-                                                                                              }
-                                                                                              ${
-                                                                                                task.description
-                                                                                                  ? `<div class="mt-1"><small class="text-muted">${task.description}</small></div>`
-                                                                                                  : ""
-                                                                                              }
-                                                                                          </div>
-                                                                                      </div>
-                                                                                  </div>
-                                                                                `;
+                                                            `;
+                                                              } else {
+                                                                return `
+                                                                <div class="task-item">
+                                                                    <div class="task-content">
+                                                                        <div class="task-info">
+                                                                            <div class="task-name">
+                                                                                ${
+                                                                                  task.name
                                                                                 }
-                                                                              }
-                                                                            )
-                                                                            .join(
-                                                                              ""
-                                                                            )
-                                                                        : `<div class="text-center py-3 text-muted">
-                                                                            <i class="fas fa-clipboard-list fa-2x mb-2"></i>
-                                                                            <p>Belum ada tugas</p>
-                                                                            <button class="btn btn-sm btn-outline-primary" onclick="openAddTaskModal(${semester.id}, ${subject.id})">
-                                                                                <i class="fas fa-plus me-1"></i>Tambah Tugas Pertama
+                                                                                <span class="badge bg-warning ms-2"><i class="fas fa-clock me-1"></i>Dalam Proses</span>
+                                                                            </div>
+                                                                            <div class="task-deadline">${
+                                                                              task.type
+                                                                            } • Deadline: ${new Date(
+                                                                  task.deadline
+                                                                ).toLocaleDateString(
+                                                                  "id-ID"
+                                                                )}</div>
+                                                                            <div class="${deadlineClass}">${deadlineText}</div>
+                                                                            ${
+                                                                              task.description
+                                                                                ? `<div class="mt-1"><small>${task.description}</small></div>`
+                                                                                : ""
+                                                                            }
+                                                                        </div>
+                                                                        <div class="task-actions">
+                                                                            <button class="btn btn-sm btn-success" onclick="markTaskCompleted(${
+                                                                              semester.id
+                                                                            }, ${
+                                                                  subject.id
+                                                                }, ${task.id})">
+                                                                                <i class="fas fa-check"></i>
                                                                             </button>
-                                                                        </div>`
-                                                                    }
+                                                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${
+                                                                              semester.id
+                                                                            }, ${
+                                                                  subject.id
+                                                                }, ${task.id})">
+                                                                                <i class="fas fa-times"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            `;
+                                                              }
+                                                            })
+                                                            .join("")
+                                                        : `
+                                                        <div class="text-center py-3 text-muted">
+                                                            <p>Belum ada tugas</p>
                                                         </div>
-                                                    `;
-                                                    })
-                                                    .join("")
-                                                : `<div class="text-center py-3 text-muted">
-                                                    <i class="fas fa-book-open fa-2x mb-2"></i>
-                                                    <p>Belum ada mata kuliah</p>
-                                                    <button class="btn btn-sm btn-outline-primary" onclick="openAddSubjectModal(${semester.id})">
-                                                        <i class="fas fa-plus me-1"></i>Tambah Mata Kuliah Pertama
-                                                    </button>
-                                                </div>`
-                                            }
+                                                    `
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
+                                    `;
+                                        })
+                                        .join("")
+                                    : `
+                                    <div class="text-center py-4 text-muted">
+                                        <p>Belum ada mata kuliah</p>
                                     </div>
-                                </div>
+                                `
+                                }
                             </div>
                         </div>
                     `;
@@ -2857,7 +1814,6 @@
 
       // Render upcoming deadlines
       function renderUpcomingDeadlines() {
-        // Collect all tasks from all semesters
         let allTasks = [];
         semesters.forEach((semester) => {
           semester.subjects.forEach((subject) => {
@@ -2871,7 +1827,6 @@
           });
         });
 
-        // Filter only pending tasks and sort by deadline
         const pendingTasks = allTasks
           .filter((task) => !task.completed)
           .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
@@ -2882,7 +1837,6 @@
         } else {
           upcomingDeadlines.style.display = "block";
           emptyDeadlineState.style.display = "none";
-
           upcomingDeadlines.innerHTML = "";
 
           pendingTasks.forEach((task) => {
@@ -2905,7 +1859,6 @@
 
             const deadlineItem = document.createElement("div");
             deadlineItem.className = "deadline-item";
-
             deadlineItem.innerHTML = `
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -2915,16 +1868,13 @@
                                 } - ${task.subjectName} (${task.type})</small>
                             </div>
                             <div class="text-end">
-                                <div class="${deadlineClass}">
-                                    ${deadlineText}
-                                </div>
+                                <div class="${deadlineClass}">${deadlineText}</div>
                                 <small class="text-muted">${new Date(
                                   task.deadline
                                 ).toLocaleDateString("id-ID")}</small>
                             </div>
                         </div>
                     `;
-
             upcomingDeadlines.appendChild(deadlineItem);
           });
         }
@@ -2933,25 +1883,16 @@
       // Open add subject modal
       function openAddSubjectModal(semesterId) {
         document.getElementById("subjectSemesterId").value = semesterId;
-        const addSubjectModal = new bootstrap.Modal(
-          document.getElementById("addSubjectModal")
-        );
-        addSubjectModal.show();
+        new bootstrap.Modal(document.getElementById("addSubjectModal")).show();
       }
 
       // Open add task modal
       function openAddTaskModal(semesterId, subjectId) {
         document.getElementById("taskSemesterId").value = semesterId;
         document.getElementById("taskSubjectId").value = subjectId;
-
-        // Set minimum date to today
         const today = new Date().toISOString().split("T")[0];
         document.getElementById("taskDeadline").min = today;
-
-        const addTaskModal = new bootstrap.Modal(
-          document.getElementById("addTaskModal")
-        );
-        addTaskModal.show();
+        new bootstrap.Modal(document.getElementById("addTaskModal")).show();
       }
 
       // Update statistics
@@ -2979,7 +1920,6 @@
 
       // Update calendar display
       function updateCalendarDisplay() {
-        // Calculate upcoming tasks (tasks that are not completed and deadline is in the future)
         let upcomingCount = 0;
         const now = new Date();
 
@@ -2995,7 +1935,6 @@
 
         upcomingTasksEl.textContent = upcomingCount;
 
-        // Update summary
         let totalTasks = 0;
         let completedTasks = 0;
 
@@ -3009,7 +1948,6 @@
         });
 
         const pendingTasks = totalTasks - completedTasks;
-
         summaryTotalEl.textContent = totalTasks;
         summaryCompletedEl.textContent = completedTasks;
         summaryPendingEl.textContent = pendingTasks;
@@ -3029,9 +1967,8 @@
 
       // Create confetti animation
       function createConfetti() {
-        const colors = ["#3498db", "#2980b9", "#e74c3c", "#2ecc71", "#f39c12"];
-
-        for (let i = 0; i < 100; i++) {
+        const colors = ["#2c3e50", "#3498db", "#e74c3c", "#27ae60", "#9b59b6"];
+        for (let i = 0; i < 50; i++) {
           const confetti = document.createElement("div");
           confetti.className = "confetti";
           confetti.style.left = Math.random() * 100 + "vw";
@@ -3040,13 +1977,8 @@
           confetti.style.width = Math.random() * 10 + 5 + "px";
           confetti.style.height = Math.random() * 10 + 5 + "px";
           confetti.style.animationDelay = Math.random() * 5 + "s";
-
           document.body.appendChild(confetti);
-
-          // Remove confetti after animation
-          setTimeout(() => {
-            confetti.remove();
-          }, 5000);
+          setTimeout(() => confetti.remove(), 5000);
         }
       }
     </script>
